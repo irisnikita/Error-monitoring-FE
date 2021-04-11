@@ -1,0 +1,19 @@
+/* --------------------------------- Header --------------------------------- */
+
+.header {
+	background-color: #fff;
+	padding: 0;
+	height: 70px;
+
+	&.absolute {
+		position: absolute;
+		width: 100%;
+	}
+
+	.logo {
+		width: max-content;
+	}
+
+	// .right-menu {
+	// }
+}
