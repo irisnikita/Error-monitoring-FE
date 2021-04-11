@@ -5,9 +5,6 @@
 import React from 'react';
 import {Layout} from 'antd';
 
-// Styles
-import styles from './styles.module.scss';
-
 // Type
 interface DefaultLayoutProps {
     isDashboard?: boolean
@@ -17,7 +14,7 @@ interface DefaultLayoutProps {
 import Header from './Components/Header';
 
 // Ant design
-const {Content, Footer} = Layout;
+const {Content} = Layout;
 
 /* -------------------------------------------------------------------------- */
 /*                                 Components                                 */
