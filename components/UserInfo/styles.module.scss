@@ -1,0 +1,25 @@
+.user-info {
+	cursor: pointer;
+	padding: 20px;
+
+	.__content {
+		line-height: 1.2;
+		color: #fff;
+		width: 80%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+
+		.__title {
+			font-size: 16px;
+		}
+
+		.__email {
+			font-size: 14px;
+			opacity: 0.7;
+		}
+	}
+}
+
+.user__dropdown-item {
+
+}

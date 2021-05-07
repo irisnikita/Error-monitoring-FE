@@ -5,22 +5,19 @@
 import React from 'react';
 
 // Components
-import Layout from 'Components/Layout';
+import Create from 'components/Projects/Create';
 
-// Type
-interface LoginProps {
+interface CreateProjectProps {
     
 }
 
 /* -------------------------------------------------------------------------- */
 /*                                  Component                                 */
 /* -------------------------------------------------------------------------- */
-const Login: React.FC<LoginProps> = () => {
+const CreateProject: React.FC<CreateProjectProps> = () => {
     return (
-        <Layout>
-            Hello weew
-        </Layout>
+        <Create />
     );
 };
 
-export default Login;
+export default CreateProject;

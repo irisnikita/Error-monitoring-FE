@@ -1,33 +1,28 @@
 /* -------------------------------------------------------------------------- */
 /*                                   Header                                   */
 /* -------------------------------------------------------------------------- */
-// Libraries
+// libraries
 import React from 'react';
-import {Provider} from 'react-redux';
-import type {NextComponentType} from 'next';
+import {useRouter} from 'next/router';
 
-// Store redux
-import {store} from 'store';
+// Components
+import Setting from 'components/Projects/Setting';
 
-// Type next
-type MyAppProps = {
-    Component: NextComponentType,
-    pageProps: any
+// Interface
+interface ProjectSettingProps {
+    
 }
-
-// Global styles
-import '../styles/globals.scss';
-import 'antd/dist/antd.css';
 
 /* -------------------------------------------------------------------------- */
 /*                                  Component                                 */
 /* -------------------------------------------------------------------------- */
-function MyApp({Component, pageProps}: MyAppProps) {
-    return (
-        <Provider store={store}>
-            <Component {...pageProps} />
-        </Provider>
-    );
-}
+const ProjectSetting: React.FC<ProjectSettingProps> = () => {
+    const router = useRouter();
+    const {pid} = router.query;
 
-export default MyApp;
+    return (
+        <Setting pId={pid} />
+    );
+};
+
+export default ProjectSetting;

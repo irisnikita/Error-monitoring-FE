@@ -7,7 +7,14 @@
 	.logo {
 		width: max-content;
 	}
+}
 
-	// .right-menu {
-	// }
+.default-sider {
+	height: 100vh;
+}
+
+.default-content {
+	height: calc(100vh - 70px);
+	overflow: auto;
+	padding: 20px;
 }
