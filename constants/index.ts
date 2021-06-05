@@ -22,4 +22,6 @@ export const projectStatus = [
     {key: 'in-active', label: 'Inactive', value: false}
 ];
 
+export const dateFormat = 'DD-MM-YYYY';
+
 export const envList = ['development', 'staging', 'production'];
