@@ -40,7 +40,6 @@ const Filter: React.FC<FilterProps> = ({
                 <Col span={24}>
                     <SelectMember projectId={filter.projectId}  name='assignee' value={filter.assignee} onChange={onChange} />
                 </Col>
-
             )}
         </Row>
     );

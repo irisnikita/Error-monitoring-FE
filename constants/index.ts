@@ -24,4 +24,6 @@ export const projectStatus = [
 
 export const dateFormat = 'DD-MM-YYYY';
 
+export const dateTimeFormat = 'MMM DD HH:mm';
+
 export const envList = ['development', 'staging', 'production'];

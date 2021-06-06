@@ -1,6 +1,6 @@
 // Libraries
 import React from 'react';
-import {Typography, Divider, Space} from 'antd';
+import {Typography, Divider, Space, Empty} from 'antd';
 import {Droppable} from 'react-beautiful-dnd';
 
 // Components
@@ -14,11 +14,13 @@ interface IssueListProps {
     members: any[],
     title: string,
     id: string,
-    issues: any[]
+    issues: any[],
+    role: any,
 }
 
 const IssueList: React.FC<IssueListProps> = ({
     members,
+    role,
     projectId,
     title,
     id,
@@ -35,8 +37,8 @@ const IssueList: React.FC<IssueListProps> = ({
                     <Divider style={{margin: '10px 0px 20px'}} />
                     <Space direction='vertical' className='w-full issue-list'>
                         {issues && issues.length ? issues.map((issue, index) => (
-                            <IssueItem members={members} projectId={projectId} key={issue.id} index={index} issue={issue} />
-                        )) : null}
+                            <IssueItem role={role} members={members} projectId={projectId} key={issue.id} index={index} issue={issue} />
+                        )) : <Empty />}
                     </Space>
                     {provided.placeholder}
                 </div>
