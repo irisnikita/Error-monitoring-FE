@@ -35,7 +35,11 @@ const SectionAdditionalData: React.FC<SectionAdditionalDataProps> = ({
                 return <Space className='w-full' direction='vertical'>
                     {Object.keys(detail).length && Object.keys(detail).map(key => (
                         <Row key={key}>
-                            <Col md={{span: 4}}>{key}</Col>
+                            <Col md={{span: 4}}>
+                                <Space className='flex h-full a-c'>
+                                    {key}
+                                </Space>
+                            </Col>
                             <Col md={{span: 20}} className='__detail-value'>{detail[key]}</Col>
                         </Row>
                     ))}

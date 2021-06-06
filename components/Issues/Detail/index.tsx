@@ -9,6 +9,7 @@ import {useSelector} from 'react-redux';
 import Layout from 'components/Layout';
 import Assignee from 'components/Issues/common/Assignee';
 import DueDate from 'components/Issues/common/DueDate';
+import Status from 'components/Issues/common/Status';
 import TabDetail from './Tabs/TabDetail';
 
 // Services
@@ -164,6 +165,10 @@ const DetailIssue: React.FC<DetailIssueProps> = () => {
                         <Paragraph type='warning' className='text-capitalize'>{description}</Paragraph>
                     </div>
                     <Space size={20}>
+                        <div>
+                            <Title level={5} className='m-0'>Status</Title>
+                            <Status size='large' role={role} issue={issue} projectId={pId} />
+                        </div>
                         <div>
                             <Title level={5} className='m-0'>DueDate</Title>
                             <DueDate size='large' role={role} issue={issue} projectId={pId} />
