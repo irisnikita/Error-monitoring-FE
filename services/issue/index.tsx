@@ -16,6 +16,6 @@ export function getList(params?: any) {
     return services.get({...params,API: process.env.NEXT_PUBLIC_API_URL + '/issue'});
 }
 
-export function get(params?: any) {
-    return services.get({...params,API: process.env.NEXT_PUBLIC_API_URL + '/issue'});
+export function get(params?: any, pId?: any) {
+    return services.get({...params,API: process.env.NEXT_PUBLIC_API_URL + `/issue/${pId}`});
 }

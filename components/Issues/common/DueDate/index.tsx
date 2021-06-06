@@ -5,7 +5,7 @@ import moment from 'moment';
 
 // Constants
 import {dateTimeFormat} from 'constants/index';
-import {RELOAD_ISSUES} from 'constants/event';
+import {RELOAD_ISSUE, RELOAD_ISSUES} from 'constants/event';
 import {STATUS_RESOLVED} from 'constants/issues';
 
 // Services
@@ -21,7 +21,7 @@ import {SizeType} from 'antd/lib/config-provider/SizeContext';
 interface DueDateProps {
     issue: any,
     size: SizeType,
-    projectId: string,
+    projectId: any,
     role: string,
 }
 
@@ -70,6 +70,7 @@ const DueDate: React.FC<DueDateProps> = ({
             });
 
             emitter.emit(RELOAD_ISSUES);
+            emitter.emit(RELOAD_ISSUE);
         } catch (error) {
             handelError();
         } finally {
@@ -90,7 +91,7 @@ const DueDate: React.FC<DueDateProps> = ({
             <DatePicker 
                 onChange={onChange}
                 style={isDated && issue.status !== STATUS_RESOLVED ? 
-                    {borderColor: 'red', color: 'red'} : {} }
+                    {borderColor: '#820014', color: 'red', background: '#ffccc7'} : {} }
                 size={size}
                 disabled={!isEditIssue(role)} 
                 value={value} 

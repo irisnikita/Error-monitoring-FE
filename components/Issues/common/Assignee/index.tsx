@@ -13,22 +13,26 @@ import {handelError, isEditIssue} from 'helpers';
 import emitter from 'helpers/mitt';
 
 // Constants
-import {RELOAD_ISSUES} from 'constants/event';
+import {RELOAD_ISSUE, RELOAD_ISSUES} from 'constants/event';
 
 // Antd
 const {Option} = Select;
 
+import {SizeType} from 'antd/lib/config-provider/SizeContext';
+
 interface AssigneeProps {
     role: any,
     issue: any,
+    size?: SizeType,
     members: any[],
-    projectId: string,
+    projectId: any,
 }
 
 const Assignee: React.FC<AssigneeProps> = ({
     role,
     members,
     issue,
+    size,
     projectId
 }) => {
     const [isLoading, setLoading] = useState(false);
@@ -51,6 +55,7 @@ const Assignee: React.FC<AssigneeProps> = ({
             });
 
             emitter.emit(RELOAD_ISSUES);
+            emitter.emit(RELOAD_ISSUE);
         } catch (error) {
             handelError();
         } finally {
@@ -60,6 +65,7 @@ const Assignee: React.FC<AssigneeProps> = ({
 
     return (
         <Select 
+            size={size}
             disabled={!isEditIssue(role)}
             onChange={onChange}
             value={selectValue(issue.assignee)}

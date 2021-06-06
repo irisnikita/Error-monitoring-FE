@@ -1,5 +1,5 @@
 .issue-list {
-  height: 50vh;
+  height: 60vh;
   overflow-y: auto;
   overflow-x: hidden;
 
@@ -7,4 +7,9 @@
   &::-webkit-scrollbar {
     width: 5px;
   }
+}
+
+.__detail-value {
+  padding: 10px;
+  background-color: rgba(150, 150, 150, 0.1);
 }

@@ -45,6 +45,14 @@ a {
   background: #555;
 }
 
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.b-white {
+  background-color: white;
+}
+
 .flex {
   display: flex !important;
 
@@ -77,6 +85,10 @@ a {
 
 .c-p {
   cursor: pointer;
+}
+
+.c-default {
+  cursor: default;
 }
 
 .text-center {
@@ -122,6 +134,9 @@ a {
 }
 .p-10 {
   padding: 10px;
+}
+.p-20 {
+  padding: 20px;
 }
 
 .t-c {
