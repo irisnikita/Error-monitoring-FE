@@ -1,6 +1,7 @@
 /* ---------------------------------- Icons --------------------------------- */
 @import "icons";
 @import "project-details";
+@import "issue";
 
 html,
 body {
@@ -88,6 +89,10 @@ a {
   text-align: right;
 }
 
+.text-nowrap {
+  white-space: nowrap;
+}
+
 .m-0 {
   margin: 0 !important;
 }
@@ -102,6 +107,9 @@ a {
 }
 .ml-10 {
   margin-left: 10px;
+}
+.mt-10 {
+  margin-top: 10px;
 }
 .mr-10 {
   margin-right: 10px;

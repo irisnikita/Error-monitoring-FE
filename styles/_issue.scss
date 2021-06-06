@@ -1,0 +1,10 @@
+.issue-list {
+  height: 50vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+}

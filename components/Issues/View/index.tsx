@@ -13,14 +13,16 @@ import Filter from './Filter';
 import Layout from 'components/Layout';
 import IssueList from './IssueList';
 
+// Services
+import * as userServices from 'services/user';
+import * as issueServices from 'services/issue';
+import * as filterServices from 'services/filter';
+
 // Antd
 const {Title} = Typography;
 
 // Filter
 import {defaultFilter} from './Filter';
-
-// Services
-import * as filterServices from 'services/filter';
 
 // Hooks
 import usePrevious from 'hooks/usePrevious';
@@ -38,6 +40,7 @@ const IssueView: React.FC<IssueViewProps> = () => {
     // State
     const [filter, setFilter] = useState(defaultFilter);
     const [issues, setIssues] = useState<any[]>([]);
+    const [members, setMembers] = useState([]);
 
     const [isLoadingIssues, setLoadingIssues] = useState(false);
     
@@ -46,9 +49,31 @@ const IssueView: React.FC<IssueViewProps> = () => {
     // Use effect get issues
     useEffect(() => {
         if (!isEqual(filter, previousFilter)) {
-            getIssue();
+            getIssues();
         }
     }, [filter]);
+
+    useEffect(() => {
+        if (filter.projectId) {
+            getMembers();
+        }
+    }, [filter.projectId]);
+
+    const getMembers = async () => {
+        try {
+            const response = await userServices.get({
+                id: filter.projectId
+            });
+
+            if (response && response.data) {
+                const {data} = response.data;
+
+                setMembers(data);
+            }
+        } catch (error) {
+            handelError();
+        }
+    };
 
     const categories = useMemo(() => {
         let draftCategories:any = {
@@ -76,7 +101,7 @@ const IssueView: React.FC<IssueViewProps> = () => {
     }, [issues]);
 
     // Function get issues
-    const getIssue = async () => {
+    const getIssues = async () => {
         setLoadingIssues(true);
         try {
             const params = {
@@ -120,9 +145,50 @@ const IssueView: React.FC<IssueViewProps> = () => {
         }));
     };
 
-    const onDragEnd = (newProps: any) => {
+    const onDragEnd = async (newProps: any) => {
         console.log('🚀 ~ file: index.tsx ~ line 95 ~ onDragEnd ~ newProps', newProps);
+        const {
+            destination = {},
+            draggableId = {},
+            source
+        } = newProps;
 
+        if (destination.droppableId !== source.droppableId ) {
+            const issue = issues.find(i => i.id === draggableId);
+            const index = issues.findIndex(i => i.id === draggableId );
+            const draftIssues = [...issues];
+            
+            draftIssues[index].status = destination.droppableId;
+
+            setIssues(draftIssues);
+
+            if (issue) {
+                updateIssue(issue, destination.droppableId);
+            }
+        }
+
+    };
+
+    const updateIssue = async (issue: any, status: string) => {
+        try {
+            const params = {
+                id: issue.projectId,
+                assignee: issue.assignee,
+                dueDate: issue.dueDate,
+                priority: issue.priority,
+                status: status
+            };
+
+            await issueServices.update({
+                id: filter.projectId,
+                type: 'update-issue',
+                issue: {...params}
+            });
+
+            getIssues();
+        } catch (error) {
+            handelError();
+        }
     };
 
     return (
@@ -131,10 +197,16 @@ const IssueView: React.FC<IssueViewProps> = () => {
             <Filter filter={filter} onChange={onChangeFilter} />
             <DragDropContext onDragEnd={onDragEnd}>
                 <Spin spinning={isLoadingIssues}>
-                    <Row gutter={10} className='mt-20'>
+                    <Row gutter={10} className='mt-10'>
                         {Object.keys(categories).map((key) => (
                             <Col key={key} span={8}>
-                                <IssueList  title={categories[key].title} id={key} issues={categories[key].issues} />
+                                <IssueList  
+                                    members={members}
+                                    projectId={filter.projectId}
+                                    title={categories[key].title}
+                                    id={key}
+                                    issues={categories[key].issues}
+                                />
                             </Col>
                         ))}
                     </Row>
