@@ -8,6 +8,7 @@ const {Option} = Select;
 // Services
 import * as projectService from 'services/project';
 import {handelError} from 'helpers';
+import {FILTER_ISSUE} from 'constants/localStorage';
 
 interface SelectProjectProps {
     name: string,
@@ -36,7 +37,9 @@ const SelectProject: React.FC<SelectProjectProps> = ({
 
                 setProjects(data);
 
-                onChange(data[0].id, name);
+                if (!localStorage.getItem(FILTER_ISSUE)) {
+                    onChange(data[0].id, name);
+                }
             }
         } catch (error) {
             handelError();

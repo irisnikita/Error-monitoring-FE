@@ -25,29 +25,35 @@ import {defaultFilter} from './Filter';
 
 // Helpers
 import {emitter} from 'helpers/mitt';
-import {handelError} from 'helpers';
+import {handelError, parseJson} from 'helpers';
 
 // Hooks
 import usePrevious from 'hooks/usePrevious';
 
 // Constants
-import {STATUS_RESOLVED_LABEL, STATUS_RESOLVED, STATUS_PROCESSING_LABEL,STATUS_PROCESSING, STATUS_UNRESOLVED, STATUS_UNRESOLVED_LABEL} from 'constants/issues';
+import {
+    STATUS_RESOLVED_LABEL,
+    STATUS_RESOLVED,
+    STATUS_PROCESSING_LABEL,
+    STATUS_PROCESSING,
+    STATUS_UNRESOLVED,
+    STATUS_UNRESOLVED_LABEL
+} from 'constants/issues';
 import {RELOAD_ISSUES} from 'constants/event';
 import {VIEWER} from 'constants/project';
+import {FILTER_ISSUE} from 'constants/localStorage';
 
 // Antd
 const {Title} = Typography;
 
-interface IssueViewProps {
-    
-}
+interface IssueViewProps {}
 
 /* -------------------------------------------------------------------------- */
 /*                                  Component                                 */
 /* -------------------------------------------------------------------------- */
 const IssueView: React.FC<IssueViewProps> = () => {
     const currentUser = useSelector((state: any) => state.layout.user);
-    
+
     // State
     const [filter, setFilter] = useState(defaultFilter);
     const [issues, setIssues] = useState<any[]>([]);
@@ -55,8 +61,23 @@ const IssueView: React.FC<IssueViewProps> = () => {
     const [project, setProject] = useState<any>({});
 
     const [isLoadingIssues, setLoadingIssues] = useState(false);
-    
+
     const previousFilter = usePrevious(filter);
+
+    useEffect(() => {
+        if (localStorage.getItem(FILTER_ISSUE)) {
+            const newFilter: any = JSON.parse((localStorage.getItem(FILTER_ISSUE) as any));
+
+            const draft: any = {
+                projectId: newFilter.projectId,
+                environment: newFilter.environment,
+                dateRange: newFilter.dateRange ? [moment(newFilter.dateRange[0]), moment(newFilter.dateRange[1])] : null,
+                assignee: newFilter.assignee
+            };
+
+            setFilter(draft);
+        }  
+    }, []);
 
     // Use effect get issues
     useEffect(() => {
@@ -83,9 +104,11 @@ const IssueView: React.FC<IssueViewProps> = () => {
 
     const role = useMemo(() => {
         if (Object.keys(project).length) {
-            const user = project.userList.find((u: any) => u.email === currentUser.email);
-      
-            return user.role || VIEWER;
+            const user = project.userList.find(
+                (u: any) => u.email === currentUser.email
+            );
+
+            return user ? user.role : VIEWER;
         }
     }, [project]);
 
@@ -122,7 +145,7 @@ const IssueView: React.FC<IssueViewProps> = () => {
     };
 
     const categories = useMemo(() => {
-        let draftCategories:any = {
+        let draftCategories: any = {
             [STATUS_UNRESOLVED]: {
                 title: STATUS_UNRESOLVED_LABEL,
                 issues: []
@@ -154,8 +177,14 @@ const IssueView: React.FC<IssueViewProps> = () => {
                 projectId: filter.projectId,
                 assignee: filter.assignee,
                 environment: filter.environment,
-                fromDate:filter.dateRange && filter.dateRange.length ? moment(filter.dateRange[0]).format() : null,
-                toDate: filter.dateRange && filter.dateRange.length ? moment(filter.dateRange[1]).format() : null
+                fromDate:
+          filter.dateRange && filter.dateRange.length
+              ? moment(filter.dateRange[0]).format()
+              : null,
+                toDate:
+          filter.dateRange && filter.dateRange.length
+              ? moment(filter.dateRange[1]).format()
+              : null
             };
 
             const response = await filterServices.filter({
@@ -178,31 +207,35 @@ const IssueView: React.FC<IssueViewProps> = () => {
     };
 
     const onChangeFilter = (value: any, name: any) => {
-        if (name === 'projectId') {
-            setFilter((filter) => ({
-                ...filter,
-                assignee: ''
-            }));
-        }
+        let draftFilter = {...filter};
         
-        setFilter((filter) => ({
-            ...filter,
+        if (name === 'projectId') {
+            draftFilter.assignee = '';
+        }
+
+        setFilter({
+            ...draftFilter,
+            [name]: value
+        });
+
+        localStorage.setItem(FILTER_ISSUE, JSON.stringify({
+            ...draftFilter,
             [name]: value
         }));
     };
 
     const onDragEnd = async (newProps: any) => {
-        const {
-            destination = {},
-            draggableId = {},
-            source
-        } = newProps;
+        const {destination = {}, draggableId = {}, source} = newProps;
 
-        if (destination && source && destination.droppableId !== source.droppableId ) {
-            const issue = issues.find(i => i.id === draggableId);
-            const index = issues.findIndex(i => i.id === draggableId );
+        if (
+            destination &&
+      source &&
+      destination.droppableId !== source.droppableId
+        ) {
+            const issue = issues.find((i) => i.id === draggableId);
+            const index = issues.findIndex((i) => i.id === draggableId);
             const draftIssues = [...issues];
-            
+
             draftIssues[index].status = destination.droppableId;
 
             setIssues(draftIssues);
@@ -211,7 +244,6 @@ const IssueView: React.FC<IssueViewProps> = () => {
                 updateIssue(issue, destination.droppableId);
             }
         }
-
     };
 
     const updateIssue = async (issue: any, status: string) => {
@@ -242,10 +274,10 @@ const IssueView: React.FC<IssueViewProps> = () => {
             <Filter filter={filter} onChange={onChangeFilter} />
             <DragDropContext onDragEnd={onDragEnd}>
                 <Spin spinning={isLoadingIssues}>
-                    <Row gutter={10} className='mt-10'>
+                    <Row gutter={10} className="mt-10">
                         {Object.keys(categories).map((key) => (
                             <Col key={key} span={8}>
-                                <IssueList  
+                                <IssueList
                                     role={role}
                                     members={members}
                                     projectId={filter.projectId}

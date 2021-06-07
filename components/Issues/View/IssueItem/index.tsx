@@ -72,14 +72,14 @@ const IssueItem: React.FC<IssueItemProps> = ({
                         <Paragraph >
                             {description}
                         </Paragraph>  
-                        <Space size={20} className='w-full' style={{justifyContent: 'space-between'}}>
+                        <div className='flex a-c w-full gap-10' style={{flexFlow: 'wrap'}}>
                             <Space align='center' size={5}>
                                 <i className='icon-hvh-clock' />
-                                {moment(createTime).fromNow(true)}
+                                {moment(createTime).fromNow()}
                             </Space>
                             <Priority role={role} projectId={projectId} issue={issue} />
                             <DueDate size='small' issue={issue} projectId={projectId} role={role} />
-                        </Space>
+                        </div>
                     </Card> 
                 </div>
             )}
