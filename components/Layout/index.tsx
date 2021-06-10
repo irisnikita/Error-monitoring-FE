@@ -45,6 +45,7 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = ({children, isDashboard = fa
     const [isPreloadPage, setPreloadPage] = useState(true);
     const [menu] = useState([
         {key: 'projects', label: 'Projects', router: '/dashboard/projects', icon: <i className='icon-hvh-folder' />},
+        {key: 'automation', label: 'Automation', router: '/dashboard/automation', icon: <i className='icon-hvh-loop2' />},
         {key: 'issues', label: 'Issues', router: '/dashboard/issues', icon: <i className='icon-hvh-stack' />},
         {key: 'alerts', label: 'Alerts', router: '/dashboard/alerts', icon: <i className='icon-hvh-bell' />},
         {key: 'stats', label: 'Stats', router: '/dashboard/stats', icon: <i className='icon-hvh-stats-bars' />}

@@ -14,11 +14,12 @@ interface SelectProjectProps {
     name: string,
     value: any,
     placeholder: string,
+    keyLocalFilter: string,
     onChange: Function
 }
 
 const SelectProject: React.FC<SelectProjectProps> = ({
-    value, name, onChange, placeholder
+    keyLocalFilter, value, name, onChange, placeholder
 }) => {
     const [projects, setProjects] = useState<any[]>([]);
     const [isLoading, setLoading] = useState(false);
@@ -37,7 +38,7 @@ const SelectProject: React.FC<SelectProjectProps> = ({
 
                 setProjects(data);
 
-                if (!localStorage.getItem(FILTER_ISSUE)) {
+                if (!localStorage.getItem(keyLocalFilter)) {
                     onChange(data[0].id, name);
                 }
             }

@@ -74,6 +74,6 @@ export const parseJson = (value: any) => {
     try {
         return JSON.parse(value);        
     } catch (error) {
-        return value;
+        return {};
     }
 };
