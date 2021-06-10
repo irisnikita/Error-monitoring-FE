@@ -91,10 +91,10 @@ const DetailSuite: React.FC<DetailSuiteProps> = () => {
     const showRenderTabContent = () => {
         switch (tab) {
             case 'test-results':
-                return <TabTestResults runs={parseJson(runs)} />;
+                return <TabTestResults suite={suite} />;
             
             default:
-                return  <TabTestResults runs={parseJson(runs)} />;
+                return  <TabTestResults  suite={suite} />;
         }
     };
 
