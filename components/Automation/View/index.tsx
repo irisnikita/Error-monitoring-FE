@@ -42,7 +42,7 @@ const Automation: React.FC<AutomationProps> = () => {
             const draft: any = {
                 projectId: newFilter.projectId,
                 environment: newFilter.environment,
-                dateRange: newFilter.dateRange ? [moment(newFilter.dateRange[0]), moment(newFilter.dateRange[1])] : null,
+                dateRange: newFilter.dateRange && newFilter.dateRange.length ? [moment(newFilter.dateRange[0]), moment(newFilter.dateRange[1])] : null,
                 assignee: newFilter.assignee
             };
 
