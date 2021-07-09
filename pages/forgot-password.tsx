@@ -83,8 +83,6 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
                         setUser({...data});
                         setCodeSend(true);
 
-                        setLoading(false);
-
                         const userUpdateResponse  = await userServices.get({
                             token: data.token
                         });
@@ -101,6 +99,9 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
                             placement: 'topLeft'
                         });
                     }
+
+                    setLoading(false);
+
                 } 
                 
             } catch (error) {
