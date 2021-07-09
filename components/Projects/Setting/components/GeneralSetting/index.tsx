@@ -67,7 +67,8 @@ const GeneralSetting: React.FC<GeneralSettingProps> = ({project, onReload}) => {
             form.setFieldsValue({
                 project: {
                     name: project.name,
-                    platform: project.platform
+                    platform: project.platform,
+                    id: project.id
                 }
             });
         }
@@ -115,6 +116,13 @@ const GeneralSetting: React.FC<GeneralSettingProps> = ({project, onReload}) => {
                         validateMessages={validateMessages}
                         form={form}
                     >
+                        <Form.Item 
+                            name={['project', 'id']}
+                            label={<div className='form__label'>Project id</div>}
+                            rules={[{required: true}]}
+                        >
+                            <Input readOnly placeholder='Project name'  size='large' />
+                        </Form.Item> 
                         <Form.Item
                             name={['project', 'platform']}
                             label={<div className='form__label'>Platform</div>}

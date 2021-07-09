@@ -79,27 +79,27 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
                             description: 'Send code success, please check email and input to change password!',
                             placement: 'topLeft'
                         });
+
+                        setUser({...data});
+                        setCodeSend(true);
+
+                        setLoading(false);
+
+                        const userUpdateResponse  = await userServices.get({
+                            token: data.token
+                        });
+
+                        if (userUpdateResponse && userUpdateResponse.data) {
+                            const {data} = userUpdateResponse.data;
+
+                            setUserUpdate({...data});
+                        }
                     } else {
                         notification.error({
                             message: 'Login',
                             description: message,
                             placement: 'topLeft'
                         });
-                    }
-
-                    setUser({...data});
-                    setCodeSend(true);
-
-                    setLoading(false);
-
-                    const userUpdateResponse  = await userServices.get({
-                        token: data.token
-                    });
-
-                    if (userUpdateResponse && userUpdateResponse.data) {
-                        const {data} = userUpdateResponse.data;
-
-                        setUserUpdate({...data});
                     }
                 } 
                 
