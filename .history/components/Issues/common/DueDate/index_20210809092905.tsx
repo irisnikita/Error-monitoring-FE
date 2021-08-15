@@ -19,34 +19,30 @@ import emitter from 'helpers/mitt';
 import {SizeType} from 'antd/lib/config-provider/SizeContext';
 
 interface DueDateProps {
-    issue: any;
-    size: SizeType;
-    projectId: any;
-    role: string;
+    issue: any,
+    size: SizeType,
+    projectId: any,
+    role: string,
 }
 
-const DueDate: React.FC<DueDateProps> = ({size, issue, role, projectId}) => {
+const DueDate: React.FC<DueDateProps> = ({
+    size,
+    issue,
+    role,
+    projectId
+}) => {
     // State
     const [value, setValue] = useState<any>(null);
     const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
-        setValue(
-            !issue.dueDate || issue.dueDate === '0001-01-01T00:00:00Z'
-                ? null
-                : moment(issue.dueDate)
-        );
+        setValue(!issue.dueDate || issue.dueDate === '0001-01-01T00:00:00Z' ? null : moment(issue.dueDate)  );
     }, [issue.dueDate]);
-
-    const disabledDate = (current: any) => {
-        // Can not select days before today and today
-        return current < moment().endOf('day');
-    };
 
     const isDated = useMemo(() => {
         const current = moment().format();
 
-        return value ? moment(current).isAfter(issue.dueDate) : false;
+        return moment(current).isAfter(issue.dueDate);
     }, [issue.dueDate]);
 
     const onOk = async (value: any) => {
@@ -56,8 +52,8 @@ const DueDate: React.FC<DueDateProps> = ({size, issue, role, projectId}) => {
     };
 
     const updateIssue = async (value: any) => {
-        setLoading(true);
-
+        setLoading (true);
+        
         try {
             const params = {
                 id: issue.id,
@@ -85,26 +81,22 @@ const DueDate: React.FC<DueDateProps> = ({size, issue, role, projectId}) => {
     const onChange = (value: any) => {
         if (value === null) {
             setValue(value);
-
+            
             updateIssue(value);
         }
     };
 
     return (
         <Spin spinning={isLoading}>
-            <DatePicker
+            <DatePicker 
                 onChange={onChange}
-                style={
-                    isDated && issue.status !== STATUS_RESOLVED
-                        ? {borderColor: '#820014', color: 'red', background: '#ffccc7'}
-                        : {}
-                }
+                style={isDated && issue.status !== STATUS_RESOLVED ? 
+                    {borderColor: '#820014', color: 'red', background: '#ffccc7'} : {} }
                 size={size}
-                disabledDate={disabledDate}
-                disabled={!isEditIssue(role)}
-                value={value}
-                placeholder="Due date"
-                showTime={{format: 'HH:mm'}}
+                disabled={!isEditIssue(role)} 
+                value={value} 
+                placeholder='Due date'
+                showTime={{format: 'HH:mm'}} 
                 format={dateTimeFormat}
                 onOk={onOk}
             />

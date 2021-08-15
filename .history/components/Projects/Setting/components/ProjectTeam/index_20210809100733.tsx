@@ -340,7 +340,7 @@ const ProjectTeam: React.FC<ProjectTeamProps> = ({project, onReload}) => {
                 footer={
                     <Space>
                         <Button type='default' onClick={() => {setOpenModalAdd(false)}}>Cancel</Button>
-                        <Button loading={isLoadingAddMember} type='primary' onClick={onOkAddMember}>{isEdit ? 'Update member' : 'Add member'}</Button>
+                        <Button loading={isLoadingAddMember} type='primary' onClick={onOkAddMember}>{isEdit ? 'Change role Member' : 'Add member'}</Button>
                     </Space>
                 }
             >

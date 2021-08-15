@@ -38,15 +38,10 @@ const DueDate: React.FC<DueDateProps> = ({size, issue, role, projectId}) => {
         );
     }, [issue.dueDate]);
 
-    const disabledDate = (current: any) => {
-        // Can not select days before today and today
-        return current < moment().endOf('day');
-    };
-
     const isDated = useMemo(() => {
         const current = moment().format();
 
-        return value ? moment(current).isAfter(issue.dueDate) : false;
+        return moment(current).isAfter(issue.dueDate);
     }, [issue.dueDate]);
 
     const onOk = async (value: any) => {
@@ -100,7 +95,6 @@ const DueDate: React.FC<DueDateProps> = ({size, issue, role, projectId}) => {
                         : {}
                 }
                 size={size}
-                disabledDate={disabledDate}
                 disabled={!isEditIssue(role)}
                 value={value}
                 placeholder="Due date"

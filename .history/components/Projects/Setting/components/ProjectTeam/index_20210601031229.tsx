@@ -335,36 +335,27 @@ const ProjectTeam: React.FC<ProjectTeamProps> = ({project, onReload}) => {
             <Modal 
                 visible={isOpenModalAdd} 
                 onOk={onOkAddMember}
-                title={isEdit ? `Edit "${addUser.fullName}" member` : 'Add member'}
+                title={isEdit ? 'Change role member' : 'Add member'}
                 onCancel={() => {setOpenModalAdd(false)}}
                 footer={
                     <Space>
                         <Button type='default' onClick={() => {setOpenModalAdd(false)}}>Cancel</Button>
-                        <Button loading={isLoadingAddMember} type='primary' onClick={onOkAddMember}>{isEdit ? 'Update member' : 'Add member'}</Button>
+                        <Button loading={isLoadingAddMember} type='primary' onClick={onOkAddMember}>{isEdit ? 'Change role Member' : 'Add member'}</Button>
                     </Space>
                 }
             >
                 <Row gutter={[10, 10]}>
-                    <Col span={24}>
-                        <Row gutter={[10, 10]}>
-                            <Col span={24}>
-                                <b style={{fontSize: 16}}>Role</b>
-                                <Select size='large' placeholder={'Chose role'} style={{width: '100%'}} value={addUser.role} onChange={onChangeSelectUser}>
-                                    {ROLE_LIST.filter(r => r.key !== OWNER).map(role => {
-                                        return (
-                                            <Option disabled={currentRole === ADMIN && addUser.email !== user.email && role.key === ADMIN} key={role.key} value={role.key}>{role.label}</Option>
-                                        );
-                                    })}
-                                </Select></Col>
-                            <Col span={24}>
-                                <b style={{fontSize: 16}}>Trello email</b>
-                                <Input size='large' placeholder='Input Trello email' />
-                            </Col>
-                            <Col span={24}>
-                                <b style={{fontSize: 16}}>Slack email</b>
-                                <Input size='large' placeholder='Input Slack email' />
-                            </Col>
-                        </Row>
+                    <Col xs={{span: 24}} md={{span: 12}}>
+                        <Input placeholder='Member' disabled readOnly value={addUser.fullName} />
+                    </Col>
+                    <Col xs={{span: 24}} md={{span: 12}}>
+                        <Select placeholder={'Chose role'} style={{width: '100%'}} value={addUser.role} onChange={onChangeSelectUser}>
+                            {ROLE_LIST.filter(r => r.key !== OWNER).map(role => {
+                                return (
+                                    <Option disabled={currentRole === ADMIN && addUser.email !== user.email && role.key === ADMIN} key={role.key} value={role.key}>{role.label}</Option>
+                                );
+                            })}
+                        </Select>
                     </Col>
                 </Row>
             </Modal>

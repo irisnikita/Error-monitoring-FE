@@ -340,7 +340,7 @@ const ProjectTeam: React.FC<ProjectTeamProps> = ({project, onReload}) => {
                 footer={
                     <Space>
                         <Button type='default' onClick={() => {setOpenModalAdd(false)}}>Cancel</Button>
-                        <Button loading={isLoadingAddMember} type='primary' onClick={onOkAddMember}>{isEdit ? 'Update member' : 'Add member'}</Button>
+                        <Button loading={isLoadingAddMember} type='primary' onClick={onOkAddMember}>{isEdit ? 'Change role Member' : 'Add member'}</Button>
                     </Space>
                 }
             >
@@ -348,7 +348,7 @@ const ProjectTeam: React.FC<ProjectTeamProps> = ({project, onReload}) => {
                     <Col span={24}>
                         <Row gutter={[10, 10]}>
                             <Col span={24}>
-                                <b style={{fontSize: 16}}>Role</b>
+                                <b>Role</b>
                                 <Select size='large' placeholder={'Chose role'} style={{width: '100%'}} value={addUser.role} onChange={onChangeSelectUser}>
                                     {ROLE_LIST.filter(r => r.key !== OWNER).map(role => {
                                         return (
@@ -357,11 +357,11 @@ const ProjectTeam: React.FC<ProjectTeamProps> = ({project, onReload}) => {
                                     })}
                                 </Select></Col>
                             <Col span={24}>
-                                <b style={{fontSize: 16}}>Trello email</b>
+                                <b className='mt-5'>Trello email</b>
                                 <Input size='large' placeholder='Input Trello email' />
                             </Col>
                             <Col span={24}>
-                                <b style={{fontSize: 16}}>Slack email</b>
+                                <b>Slack email</b>
                                 <Input size='large' placeholder='Input Slack email' />
                             </Col>
                         </Row>

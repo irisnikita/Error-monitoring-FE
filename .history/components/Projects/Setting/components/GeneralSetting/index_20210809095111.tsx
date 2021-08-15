@@ -130,7 +130,7 @@ const GeneralSetting: React.FC<GeneralSettingProps> = ({project, onReload}) => {
                             label={<div className='form__label'>Project id</div>}
                             rules={[{required: true}]}
                         >
-                            <Input id='project-id-input' readOnly placeholder='Project name'  size='large' suffix={<Tooltip title='Copy project id'><i className='icon-hvh-copy c-p' onClick={onClickCopyProjectId} /></Tooltip>} />
+                            <Input id='project-id-input' readOnly placeholder='Project name'  size='large' suffix={<Tooltip title='Copy project code'><i className='icon-hvh-copy c-p' onClick={onClickCopyProjectId} /></Tooltip>} />
                         </Form.Item> 
                         <Form.Item
                             name={['project', 'platform']}

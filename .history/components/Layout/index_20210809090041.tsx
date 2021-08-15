@@ -4,7 +4,7 @@
 // Libraries
 import React, {useEffect, useMemo, useState} from 'react';
 import {Layout, Menu, Spin} from 'antd';
-import {useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {useRouter} from 'next/router';
 import Link from 'next/link';
 import classnames from 'classnames';
@@ -17,7 +17,7 @@ import * as userServices from 'services/user';
 import useMounted from 'hooks/useMounted';
 
 // Redux toolkit
-import {setUser} from 'slice/layoutSlice';
+import {selectUser, setUser} from 'slice/layoutSlice';
 
 // Styles
 import styles from './styles.module.scss';
@@ -50,7 +50,7 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = ({children, isDashboard = fa
         {key: 'alerts', label: 'Alerts', router: '/dashboard/alerts', icon: <i className='icon-hvh-bell' />},
         {key: 'stats', label: 'Stats', router: '/dashboard/stats', icon: <i className='icon-hvh-stats-bars' />}
     ]);
-    
+
     // Redux
     const dispatch = useDispatch();
 

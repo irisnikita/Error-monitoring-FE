@@ -96,6 +96,9 @@ const Header: React.FC<HeaderProps> = ({isDashboard}) => {
 
     const onClickLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('filter-issue');
+        localStorage.removeItem('filter-suite');
+        
         dispatch(setUser({}));
         router.push('/');
     };

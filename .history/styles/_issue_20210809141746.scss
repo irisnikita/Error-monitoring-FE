@@ -1,0 +1,15 @@
+.issue-list {
+  height: 60vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+}
+
+.__detail-value {
+  padding: 10px;
+  background-color: rgba(150, 150, 150, 0.1);
+}

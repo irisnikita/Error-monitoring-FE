@@ -40,7 +40,7 @@ const DueDate: React.FC<DueDateProps> = ({size, issue, role, projectId}) => {
 
     const disabledDate = (current: any) => {
         // Can not select days before today and today
-        return current < moment().endOf('day');
+        return current < moment().startOf('day');
     };
 
     const isDated = useMemo(() => {
