@@ -49,6 +49,8 @@ export const initialProject = {
     id: '',
     issues: [],
     name: '',
+    trelloInfo: {},
+    enableTrello: false,
     platform: '',
     userList: []
 }; 

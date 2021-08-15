@@ -312,6 +312,18 @@ const Dashboard: React.FC<DashboardProps> = () => {
                             name: (createdProject as any).name,
                             platform: (createdProject as any).platform,
                             'userList': [],
+                            'enableTrello': false,
+                            'trelloInfo': {
+                                'appToken':'',
+                                'userId':'',
+                                'boardId':'',
+                                'listId':''
+                            },
+                            'enableSlack':false,
+                            'slackInfo':{
+                                'botToken':'',
+                                'chanelId':''
+                            },
                             'issues': [],
                             'createTime': moment().format(),
                             'createUser': user.email,

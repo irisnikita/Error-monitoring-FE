@@ -6,6 +6,7 @@ import React from 'react';
 import {Avatar, Typography, Dropdown, Menu} from 'antd';
 import  {useSelector} from 'react-redux';
 import classnames from 'classnames';
+import Link from 'next/link';
 
 // Redux toolkit
 import {selectUser} from 'slice/layoutSlice';
@@ -34,7 +35,11 @@ const UserInfo: React.FC<UserInfoProps> = () => {
                     <span className={styles['__email']}>{email}</span>
                 </div>
             </div>
-            <Menu.Item>User settings</Menu.Item>
+            <Menu.Item>
+                <Link href='/dashboard/user'>
+                User settings
+                </Link>
+            </Menu.Item>
             <Menu.Item>API keys</Menu.Item>
             <Menu.Item>Sign out</Menu.Item>
         </Menu>
@@ -43,7 +48,7 @@ const UserInfo: React.FC<UserInfoProps> = () => {
     return (
         <Dropdown overlay={menu}  trigger={['click']}>
             <div className={classnames('flex a-c', styles['user-info'])}>
-                <Avatar style={{backgroundColor: '#08979c'}} size='large' src={avatar}>{formatNameToAvatar(organization)}</Avatar>
+                <Avatar style={{backgroundColor: '#08979c'}} size='large'>{formatNameToAvatar(organization)}</Avatar>
                 <div className={classnames(styles['__content'], 'ml-10')}>
                     <strong className={styles['__title']}>{organization}</strong> <br />
                     <span className={styles['__email']}>{email}</span>

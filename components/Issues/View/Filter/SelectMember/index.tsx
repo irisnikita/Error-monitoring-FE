@@ -1,6 +1,6 @@
 // Libraries
 import React, {useEffect, useState} from 'react';
-import {Avatar, Tooltip, Space, Spin} from 'antd';
+import {Avatar, Tooltip, Space, Spin, Badge} from 'antd';
 
 // Services
 import * as userServices from 'services/user';
@@ -61,10 +61,13 @@ const SelectMember: React.FC<SelectMemberProps> = ({
                 {members && members.length ? members.map((member) => (
                     <div className="c-p" key={member.email} onClick={() => onClickAvatar(member.email)}>
                         <Tooltip mouseEnterDelay={1} title={`${member.fullName} (${member.email})`}>
-                            <Avatar 
-                                style={{background: member.email === value ? '#08979c' : 'grey'}}>
-                                {formatNameToAvatar(member.fullName)}
-                            </Avatar>
+                            <Badge dot={member.email === value}>
+                                <Avatar 
+                                    src={member.avatar}
+                                    style={{background: member.email === value ? '#08979c' : 'grey'}}>
+                                    {formatNameToAvatar(member.fullName)}
+                                </Avatar>
+                            </Badge>
                         </Tooltip>
                     </div>
                 )) : null}

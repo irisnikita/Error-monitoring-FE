@@ -85,6 +85,18 @@ const CreateProjectForm = (props: any) => {
                     name: name,
                     platform: platform,
                     'userList': [],
+                    'enableTrello': false,
+                    'trelloInfo': {
+                        'appToken':'',
+                        'userId':'',
+                        'boardId':'',
+                        'listId':''
+                    },
+                    'enableSlack':false,
+                    'slackInfo':{
+                        'botToken':'',  
+                        'chanelId':''
+                    },
                     'issues': [],
                     'createTime': moment().format(),
                     'createUser': user.email,

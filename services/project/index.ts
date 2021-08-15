@@ -19,3 +19,6 @@ export function getList(params?: any) {
 export function get(params?: any) {
     return services.get({...params,API: process.env.NEXT_PUBLIC_API_URL + '/project'});
 }
+export function getListBoard(params?: any) {
+    return services.get({...params,API: process.env.NEXT_PUBLIC_API_URL + '/GetListBoard'});
+}

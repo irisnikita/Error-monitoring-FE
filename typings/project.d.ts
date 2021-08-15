@@ -6,6 +6,8 @@ export interface IProject  {
     id: string,
     issues: never[],
     name: string,
+    trelloInfo: Record<string, any>,
+    enableTrello: Boolean,
     userList: TProjectUser[],
     platform: string
 }

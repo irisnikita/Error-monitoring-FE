@@ -6,6 +6,7 @@ import {Menu, Row, Col, Spin} from 'antd';
 import Layout from 'components/Layout';
 import GeneralSetting from './components/GeneralSetting';
 import ProjectTeam from './components/ProjectTeam';
+import IntegrationTrello from './components/IntegrationTrello';
 
 // Services
 import * as projectServices from 'services/project';
@@ -44,6 +45,9 @@ const Setting: React.FC<SettingProps> = ({pId}) => {
             },
             {
                 key: 'project-team', label: 'Project Team'
+            },
+            {
+                key: 'integration-trello', label: 'Integration Trello'
             }
         ]
     }];
@@ -107,6 +111,9 @@ const Setting: React.FC<SettingProps> = ({pId}) => {
             case 'project-team':
                 return <ProjectTeam onReload={onReloadProject} project={project} />;
         
+            case 'integration-trello':
+                return <IntegrationTrello onReload={onReloadProject}  project={project} />;
+        
             default:
                 return <GeneralSetting onReload={onReloadProject} project={project} />;
         }
@@ -131,7 +138,6 @@ const Setting: React.FC<SettingProps> = ({pId}) => {
                     </Spin>
                 </Col>
             </Row>
-
         </Layout>
     );
 };

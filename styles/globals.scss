@@ -310,9 +310,39 @@ button {
 
 .form__label {
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .table__title {
   font-size: 16px;
+}
+
+.avatar-uploader {
+  .ant-upload-select-picture-card {
+    position: relative;
+    width: 150px !important;
+    height: 150px !important;
+    border-radius: 50% !important;
+    overflow: hidden;
+
+    &:hover {
+      .bg-hover {
+        opacity: 1;
+      }
+    }
+
+    .bg-hover {
+      opacity: 0;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.747);
+      display: flex;
+      transition: all 300ms;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+    }
+  }
 }
