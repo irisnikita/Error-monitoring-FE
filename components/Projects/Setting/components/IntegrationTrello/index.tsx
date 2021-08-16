@@ -58,9 +58,9 @@ const Integration: React.FC<IntegrationProps> = ({project, onReload}) => {
   
             try {
                 const {data} = await projectServices.getListBoard({
-                    apptoken: appToken,
-                    userID: userId,
-                    boardId: boardId
+                    appToken,
+                    userId,
+                     boardId
                 }) as any;
 
                 if (data && data.data) {
