@@ -50,7 +50,7 @@ const SectionAdditionalData: React.FC<SectionAdditionalDataProps> = ({
     return (
         <div>
             <Space className='w-full' style={{justifyContent: 'space-between'}}>
-                <Title level={5}>EXCEPTION</Title>
+                <Title level={5}>ADDITIONAL DATA</Title>
                 <Radio.Group
                     options={options}
                     onChange={onChangeOptions}

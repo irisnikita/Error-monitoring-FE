@@ -356,14 +356,14 @@ const ProjectTeam: React.FC<ProjectTeamProps> = ({project, onReload}) => {
                                         );
                                     })}
                                 </Select></Col>
-                            <Col span={24}>
+                            {/* <Col span={24}>
                                 <b style={{fontSize: 16}}>Trello email</b>
                                 <Input size='large' placeholder='Input Trello email' />
                             </Col>
                             <Col span={24}>
                                 <b style={{fontSize: 16}}>Slack email</b>
                                 <Input size='large' placeholder='Input Slack email' />
-                            </Col>
+                            </Col> */}
                         </Row>
                     </Col>
                 </Row>

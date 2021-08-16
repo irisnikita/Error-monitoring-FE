@@ -118,45 +118,44 @@ const AccountDetails: React.FC<AccountDetailsProps> = () => {
         }
     };
 
-    const onChangeAvatar = async (info: any ) => {
-        if (info.file.status === 'uploading') {
-            setIsLoadingAvatar(true);
-            return;
-        }
-        if (info.file.status === 'done') {
-            const formData = new FormData();
+    const customRequest = async (options: any) => {
+        const {onSuccess, onError, file} = options;
 
-            formData.append('image', info.file.originFileObj);
-            try {
-                const {data} = await uploadImage({
-                    formData,
-                    key: 'c4d0562611183c8c0c106d886136d547'
-                }) as any;
-                
-                if (data && data.data && data.data.url) {
-                    const {url} = data.data;
+        const formData = new FormData();
 
-                    await userServices.update({
-                        type: 'update',
-                        user: {
-                            ...user,
-                            avatar: url
-                        }
-                    });
+        formData.append('image', file);
 
-                    dispatch(setUser({
+        setIsLoadingAvatar(true);
+        try {
+            const {data} = await uploadImage({
+                formData,
+                key: 'c4d0562611183c8c0c106d886136d547'
+            }) as any;
+            
+            if (data && data.data && data.data.url) {
+                const {url} = data.data;
+
+                await userServices.update({
+                    type: 'update',
+                    user: {
                         ...user,
                         avatar: url
-                    }));
+                    }
+                });
 
-                    message.success('Update avatar success');
-                }
-            } catch (error) {
-                handelError();
-            } finally {
-                setIsLoadingAvatar(false);
+                dispatch(setUser({
+                    ...user,
+                    avatar: url
+                }));
+
+                onSuccess('Ok');
+                message.success('Update avatar success');
             }
-           
+        } catch (error) {
+            handelError();
+            onError({error});
+        } finally {
+            setIsLoadingAvatar(false);
         }
     };
 
@@ -217,13 +216,13 @@ const AccountDetails: React.FC<AccountDetailsProps> = () => {
                         <ImgCrop rotate>
                             <Upload
                                 listType="picture-card"
+                                customRequest={customRequest}
                                 className='avatar-uploader'
                                 showUploadList={false}
-                                beforeUpload={beforeUpload}
-                                onChange={onChangeAvatar}
+                                // onChange={onChangeAvatar}
                             >
                                 <div className='bg-hover'>Change avatar</div>
-                                {user.avatar  ? <img src={user.avatar} width={150} style={{objectFit: 'cover', objectPosition: 'center'}} height={150} /> : <div>No image</div>}
+                                {user.avatar ? <img src={user.avatar} width={150} style={{objectFit: 'cover', objectPosition: 'center'}} height={150} /> : <div>No image</div>}
                             </Upload>
                         </ImgCrop>
                     </Spin>
