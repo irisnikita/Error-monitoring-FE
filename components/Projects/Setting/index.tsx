@@ -7,6 +7,7 @@ import Layout from 'components/Layout';
 import GeneralSetting from './components/GeneralSetting';
 import ProjectTeam from './components/ProjectTeam';
 import IntegrationTrello from './components/IntegrationTrello';
+import IntegrationSlack from './components/IntegrationSlack';
 
 // Services
 import * as projectServices from 'services/project';
@@ -48,6 +49,9 @@ const Setting: React.FC<SettingProps> = ({pId}) => {
             },
             {
                 key: 'integration-trello', label: 'Integration Trello'
+            },
+            {
+                key: 'integration-slack', label: 'Integration Slack'
             }
         ]
     }];
@@ -113,6 +117,9 @@ const Setting: React.FC<SettingProps> = ({pId}) => {
         
             case 'integration-trello':
                 return <IntegrationTrello onReload={onReloadProject}  project={project} />;
+        
+            case 'integration-slack':
+                return <IntegrationSlack onReload={onReloadProject}  project={project} />;
         
             default:
                 return <GeneralSetting onReload={onReloadProject} project={project} />;

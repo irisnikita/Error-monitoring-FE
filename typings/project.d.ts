@@ -7,6 +7,8 @@ export interface IProject  {
     issues: never[],
     name: string,
     trelloInfo: Record<string, any>,
+    slackInfo: Record<string, any>,
+    enableSlack: Boolean,
     enableTrello: Boolean,
     userList: TProjectUser[],
     platform: string

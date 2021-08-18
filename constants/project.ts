@@ -50,6 +50,8 @@ export const initialProject = {
     issues: [],
     name: '',
     trelloInfo: {},
+    slackInfo: {},
+    enableSlack: false,
     enableTrello: false,
     platform: '',
     userList: []
