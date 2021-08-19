@@ -4,7 +4,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Row, Col, Typography, Spin, Steps, Form, Input, Select, Button, notification} from 'antd';
 import moment from 'moment';
 import {useRouter} from 'next/router';
-
+// import {Steps as IntroSteps} from 'intro.js-react';
 // Redux toolkit
 import {selectUser, setUser} from 'slice/layoutSlice';
 
@@ -27,7 +27,25 @@ interface DashboardProps {
     
 }
 
+const introSteps = [
+    {
+        element: '#organization-input',
+        intro: 'test 1',
+        position: 'right'
+    },
+    {
+        element: '#main-platform-input',
+        intro: 'test 2'
+    },
+    {
+        element: '.rc-virtual-list-holder-inner',
+        intro: 'test 2'
+    }
+   
+];
+
 const StepUpdateInfo = (props: any) => {
+   
     const user = useSelector(selectUser);
 
     // Form 
@@ -95,14 +113,14 @@ const StepUpdateInfo = (props: any) => {
                 label='Organization'
                 rules={[{required: true}]}
             >
-                <Input placeholder='Organization'  size='large' />
+                <Input id="organization-input" placeholder='Organization'  size='large' />
             </Form.Item>    
             <Form.Item
                 name={['user', 'mainPlatform']}
                 label='Main platform'
                 rules={[{required: true}]}
             >
-                <Select placeholder='Main platform' size='large'>
+                <Select id="main-platform-input" placeholder='Main platform' size='large'>
                     {platforms && platforms.length ? platforms.map(platform => {
                         return (
                             <Option className='platform__option' value={platform.key} key={platform.key}>
@@ -227,6 +245,12 @@ const StepDone = (props: any) => {
 };
 
 const Dashboard: React.FC<DashboardProps> = () => {
+    // let IntroSteps: any = () => <></>;
+
+    // if ((process as any).browser) {
+    //     IntroSteps = require('intro.js-react').Steps;
+    // }
+
     // Redux
     const dispatch = useDispatch();
     const user = useSelector(selectUser);

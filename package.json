@@ -16,6 +16,8 @@
     "antd-img-crop": "^3.14.3",
     "axios": "^0.21.1",
     "classnames": "^2.3.1",
+    "intro.js": "^4.1.0",
+    "intro.js-react": "^0.4.0",
     "lodash": "^4.17.21",
     "mitt": "^2.1.0",
     "moment": "^2.29.1",

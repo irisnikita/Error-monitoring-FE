@@ -275,7 +275,7 @@ const IssueView: React.FC<IssueViewProps> = () => {
             <DragDropContext onDragEnd={onDragEnd}>
                 <Spin spinning={isLoadingIssues}>
                     <Row gutter={10} className="mt-10">
-                        {Object.keys(categories).map((key) => (
+                        {Object.keys(categories).length ? Object.keys(categories).map((key) => (
                             <Col key={key} span={8}>
                                 <IssueList
                                     role={role}
@@ -286,7 +286,7 @@ const IssueView: React.FC<IssueViewProps> = () => {
                                     issues={categories[key].issues}
                                 />
                             </Col>
-                        ))}
+                        )) : null}
                     </Row>
                 </Spin>
             </DragDropContext>

@@ -72,9 +72,9 @@ const Assignee: React.FC<AssigneeProps> = ({
             loading={isLoading}
             placeholder='Assignee'
         >
-            {members.map(member => (
+            {Array.isArray(members) ? members.map(member => (
                 <Option key={member.email} value={member.email}>{member.fullName}</Option>
-            ))}
+            )) : null}
         </Select>
     );
 };

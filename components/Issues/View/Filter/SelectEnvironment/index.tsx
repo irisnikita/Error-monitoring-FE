@@ -25,11 +25,11 @@ const SelectProject: React.FC<SelectProjectProps> = ({
 
     return (
         <Select className='w-full' size='large' placeholder={placeholder} value={value} onChange={(value) => onChange(value, name)}>
-            {options.map(option => (
+            {Array.isArray(options) ? options.map(option => (
                 <Option key={option.key} value={option.key}>
                     {option.label}
                 </Option>
-            ))}
+            )) : null}
         </Select>
     );
 };

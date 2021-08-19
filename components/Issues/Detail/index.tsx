@@ -181,11 +181,11 @@ const DetailIssue: React.FC<DetailIssueProps> = () => {
                 </Space>
                 <div className='b-white p-20 mt-20'>
                     <Tabs activeKey={tab} onChange={(key) => setTab(key) }>
-                        {tabs.map(tab => (
+                        {Array.isArray(tabs) ? tabs.map(tab => (
                             <TabPane tab={tab.label} key={tab.key}>
                                 {showRenderTabContent()}
                             </TabPane>
-                        ))}
+                        )) : null}
                     </Tabs>
                     
                 </div>

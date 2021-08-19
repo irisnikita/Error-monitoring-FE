@@ -18,6 +18,7 @@ type MyAppProps = {
 // Global styles
 import '../styles/globals.scss';
 import 'antd/dist/antd.css';
+import 'intro.js/introjs.css';
 
 /* -------------------------------------------------------------------------- */
 /*                                  Component                                 */
