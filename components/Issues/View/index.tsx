@@ -3,7 +3,7 @@
 /* -------------------------------------------------------------------------- */
 // Libraries
 import React, {useEffect, useMemo, useState} from 'react';
-import {Col, Row, Spin, Typography} from 'antd';
+import {Col, Row, Spin, Typography, Tooltip} from 'antd';
 import isEqual from 'lodash/isEqual';
 import moment from 'moment';
 import {DragDropContext} from 'react-beautiful-dnd';
@@ -37,7 +37,9 @@ import {
     STATUS_PROCESSING_LABEL,
     STATUS_PROCESSING,
     STATUS_UNRESOLVED,
-    STATUS_UNRESOLVED_LABEL
+    STATUS_UNRESOLVED_LABEL,
+    STATUS_REVIEWING,
+    STATUS_REVIEWING_LABEL
 } from 'constants/issues';
 import {RELOAD_ISSUES} from 'constants/event';
 import {VIEWER} from 'constants/project';
@@ -154,6 +156,10 @@ const IssueView: React.FC<IssueViewProps> = () => {
                 title: STATUS_PROCESSING_LABEL,
                 issues: []
             },
+            [STATUS_REVIEWING]: {
+                title: STATUS_REVIEWING_LABEL,
+                issues: []
+            },
             [STATUS_RESOLVED]: {
                 title: STATUS_RESOLVED_LABEL,
                 issues: []
@@ -251,7 +257,9 @@ const IssueView: React.FC<IssueViewProps> = () => {
             const params = {
                 id: issue.id,
                 assignee: issue.assignee,
+                reviewer: issue.reviewer,
                 dueDate: issue.dueDate,
+                startDate: issue.startDate,
                 priority: issue.priority,
                 status: status
             };
@@ -268,13 +276,20 @@ const IssueView: React.FC<IssueViewProps> = () => {
         }
     };
 
+    const onClickFresh =  () => {
+        getIssues();
+    };
+
     return (
         <Layout isDashboard>
-            <Title level={4}>Issues</Title>
+            <div className='flex a-c gap-10 mb-10'>
+                <Title level={4} className='m-0'>Issues</Title>
+                <Tooltip title='Refresh'><i className='icon-hvh-loop2 c-p' onClick={onClickFresh} /></Tooltip>
+            </div>
             <Filter filter={filter} onChange={onChangeFilter} />
             <DragDropContext onDragEnd={onDragEnd}>
                 <Spin spinning={isLoadingIssues}>
-                    <Row gutter={10} className="mt-10">
+                    <Row gutter={10} className="mt-10 w-full over-auto" wrap={false}>
                         {Object.keys(categories).length ? Object.keys(categories).map((key) => (
                             <Col key={key} span={8}>
                                 <IssueList

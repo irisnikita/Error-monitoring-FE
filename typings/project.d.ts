@@ -11,12 +11,17 @@ export interface IProject  {
     enableSlack: Boolean,
     enableTrello: Boolean,
     userList: TProjectUser[],
-    platform: string
+    platform: string,
+    autoSuggestSolution: Boolean,
+    autoSuggestPerson: Boolean,
+    enableMailNotification: Boolean
 }
 
 export type TProjectUser = {
     email: string,
-    role: string
+    role: string,
+    NameInProduct?: string,
+    nameInProduct: string,
 }
 
 export type TEnv = 'development' | 'staging' | 'production'

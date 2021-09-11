@@ -99,6 +99,9 @@ const CreateProjectForm = (props: any) => {
                     },
                     'issues': [],
                     'createTime': moment().format(),
+                    'autoSuggestPerson': false,
+                    'autoSuggestSolution': false,
+                    'enableMailNotification': false,
                     'createUser': user.email,
                     'envList': ['development', 'staging', 'production'],
                     'active':true

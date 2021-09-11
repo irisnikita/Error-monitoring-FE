@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 // Components
 import Assignee from 'components/Issues/common/Assignee';
+import Reviewer from 'components/Issues/common/Reviewer';
 import Priority from 'components/Issues/common/Priority';
 import DueDate from 'components/Issues/common/DueDate';
 
@@ -79,6 +80,7 @@ const IssueItem: React.FC<IssueItemProps> = ({
                             </Space>
                             <Priority role={role} projectId={projectId} issue={issue} />
                             <DueDate size='small' issue={issue} projectId={projectId} role={role} />
+                            <Reviewer role={role} members={members} issue={issue} projectId={projectId} size={'small'} />
                         </div>
                     </Card> 
                 </div>

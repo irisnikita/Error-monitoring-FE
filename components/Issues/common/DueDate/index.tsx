@@ -18,6 +18,9 @@ import emitter from 'helpers/mitt';
 // Typings
 import {SizeType} from 'antd/lib/config-provider/SizeContext';
 
+// Antd
+const {RangePicker} = DatePicker;
+
 interface DueDateProps {
     issue: any;
     size: SizeType;
@@ -27,15 +30,19 @@ interface DueDateProps {
 
 const DueDate: React.FC<DueDateProps> = ({size, issue, role, projectId}) => {
     // State
-    const [value, setValue] = useState<any>(null);
+    const [value, setValue] = useState<any>([]);
     const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
-        setValue(
-            !issue.dueDate || issue.dueDate === '0001-01-01T00:00:00Z'
-                ? null
-                : moment(issue.dueDate)
-        );
+        const dueDate = !issue.dueDate || issue.dueDate === '0001-01-01T00:00:00Z'
+            ? null
+            : moment(issue.dueDate);
+
+        const startDate = !issue.startDate || issue.startDate === '0001-01-01T00:00:00Z'
+            ? null
+            : moment(issue.startDate);
+
+        setValue([startDate, dueDate]);
     }, [issue.dueDate]);
 
     const disabledDate = (current: any) => {
@@ -46,7 +53,7 @@ const DueDate: React.FC<DueDateProps> = ({size, issue, role, projectId}) => {
     const isDated = useMemo(() => {
         const current = moment().format();
 
-        return value ? moment(current).isAfter(issue.dueDate) : false;
+        return value[1] ? moment(current).isAfter(issue.dueDate) : false;
     }, [issue.dueDate]);
 
     const onOk = async (value: any) => {
@@ -62,7 +69,9 @@ const DueDate: React.FC<DueDateProps> = ({size, issue, role, projectId}) => {
             const params = {
                 id: issue.id,
                 assignee: issue.assignee,
-                dueDate: value ? moment(value).format() : null,
+                reviewer: issue.reviewer,
+                dueDate: value[1] ? moment(value[1]).format() : null,
+                startDate: value[0] ? moment(value[0]).format() : null,
                 priority: issue.priority,
                 status: issue.status
             };
@@ -92,7 +101,7 @@ const DueDate: React.FC<DueDateProps> = ({size, issue, role, projectId}) => {
 
     return (
         <Spin spinning={isLoading}>
-            <DatePicker
+            <RangePicker
                 onChange={onChange}
                 style={
                     isDated && issue.status !== STATUS_RESOLVED
@@ -103,7 +112,7 @@ const DueDate: React.FC<DueDateProps> = ({size, issue, role, projectId}) => {
                 disabledDate={disabledDate}
                 disabled={!isEditIssue(role)}
                 value={value}
-                placeholder="Due date"
+                placeholder={['Start date','Due date']}
                 showTime={{format: 'HH:mm'}}
                 format={dateTimeFormat}
                 onOk={onOk}

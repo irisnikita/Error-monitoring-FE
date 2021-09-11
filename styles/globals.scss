@@ -26,6 +26,7 @@ a {
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
+  height: 8px;
 }
 
 /* Track */
@@ -51,6 +52,10 @@ a {
 
 .b-white {
   background-color: white;
+}
+
+.over-auto {
+  overflow: auto;
 }
 
 .flex {
@@ -135,6 +140,10 @@ a {
 .mb-20 {
   margin-bottom: 20px !important;
 }
+.mb-10 {
+  margin-bottom: 10px;
+}
+
 .p-10 {
   padding: 10px;
 }

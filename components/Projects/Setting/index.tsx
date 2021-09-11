@@ -8,6 +8,8 @@ import GeneralSetting from './components/GeneralSetting';
 import ProjectTeam from './components/ProjectTeam';
 import IntegrationTrello from './components/IntegrationTrello';
 import IntegrationSlack from './components/IntegrationSlack';
+import IssuesSetting from './components/IssuesSetting';
+import Notification from './components/Notification';
 
 // Services
 import * as projectServices from 'services/project';
@@ -45,6 +47,9 @@ const Setting: React.FC<SettingProps> = ({pId}) => {
                 key: 'general-setting', label: 'General Settings'
             },
             {
+                key: 'issues-setting', label: 'Issues Settings'
+            },
+            {
                 key: 'project-team', label: 'Project Team'
             },
             {
@@ -52,6 +57,9 @@ const Setting: React.FC<SettingProps> = ({pId}) => {
             },
             {
                 key: 'integration-slack', label: 'Integration Slack'
+            },
+            {
+                key: 'notification', label: 'Notification'
             }
         ]
     }];
@@ -112,6 +120,9 @@ const Setting: React.FC<SettingProps> = ({pId}) => {
             case 'general-setting':
                 return <GeneralSetting onReload={onReloadProject} project={project} />;
         
+            case 'issues-setting':
+                return <IssuesSetting onReload={onReloadProject} project={project} />;
+        
             case 'project-team':
                 return <ProjectTeam onReload={onReloadProject} project={project} />;
         
@@ -120,6 +131,9 @@ const Setting: React.FC<SettingProps> = ({pId}) => {
         
             case 'integration-slack':
                 return <IntegrationSlack onReload={onReloadProject}  project={project} />;
+        
+            case 'notification':
+                return <Notification onReload={onReloadProject}  project={project} />;
         
             default:
                 return <GeneralSetting onReload={onReloadProject} project={project} />;

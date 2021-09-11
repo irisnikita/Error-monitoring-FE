@@ -15,7 +15,9 @@ import {
     PRIORITY_LOW_COLOR,
     PRIORITY_MEDIUM_COLOR,
     PRIORITY_HIGH_COLOR,
-    PRIORITIES
+    PRIORITIES,
+    STATUS_REVIEWING,
+    STATUS_REVIEWING_COLOR
 } from 'constants/issues';
 import {VIEWER} from 'constants/project';
 
@@ -36,6 +38,10 @@ export const getIssueStatusColor = (status: any) => {
         case STATUS_PROCESSING:
             
             return STATUS_PROCESSING_COLOR;
+        case STATUS_REVIEWING:
+            
+            return STATUS_REVIEWING_COLOR;
+                
         case STATUS_RESOLVED:
             
             return STATUS_RESOLVED_COLOR;

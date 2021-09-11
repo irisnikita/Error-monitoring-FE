@@ -24,6 +24,7 @@ import emitter from 'helpers/mitt';
 // Constants
 import {VIEWER} from 'constants/project';
 import {RELOAD_ISSUE} from 'constants/event';
+import Reviewer from '../common/Reviewer';
 
 const {Title, Paragraph} = Typography;
 const {TabPane} = Tabs;
@@ -176,6 +177,10 @@ const DetailIssue: React.FC<DetailIssueProps> = () => {
                         <div>
                             <Title level={5} className='m-0'>Assignee</Title>
                             <Assignee members={members} size='large' role={role} issue={issue} projectId={pId} />
+                        </div>
+                        <div>
+                            <Title level={5} className='m-0'>Reviewer</Title>
+                            <Reviewer members={members} size='large' role={role} issue={issue} projectId={pId} />
                         </div>
                     </Space>
                 </Space>

@@ -349,6 +349,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
                                 'chanelId':''
                             },
                             'issues': [],
+                            'autoSuggestPerson': false,
+                            'autoSuggestSolution': false,
+                            'enableMailNotification': false,
                             'createTime': moment().format(),
                             'createUser': user.email,
                             'envList': ['development', 'staging', 'production'],

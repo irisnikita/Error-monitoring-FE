@@ -26,6 +26,7 @@ import {ADMIN, ADMIN_LABEL, EDITOR, OWNER, ROLE_LIST, VIEWER} from 'constants/pr
 
 // Helpers
 import {handelError} from 'helpers';
+import {getNameFromEmail} from 'utils';
 
 const {Title, Paragraph} = Typography;
 const {Option} = Select;
@@ -62,6 +63,7 @@ const ProjectTeam: React.FC<ProjectTeamProps> = ({project, onReload}) => {
     const [addUser, setAddUser] = useState<any>({});
     const [isLoadingAddMember, setLoadingAddMember] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
+    const [isDuplicateNickName, setDuplicateNickName] = useState(false);
 
     const debounceSearch = useDebounce(valueSearch, 500);
 
@@ -82,7 +84,10 @@ const ProjectTeam: React.FC<ProjectTeamProps> = ({project, onReload}) => {
             render: (_text: string, row: any) => {
                 return (
                     <div>
-                        <Title level={5} className='m-0'>{row.member.fullName}</Title>
+                        <div className='flex a-c'>
+                            <Title level={5} className='m-0'>{row.member.fullName}</Title> &nbsp;
+                            <Paragraph className='m-0'>({row.member.nameInProduct})</Paragraph>
+                        </div>
                         <Paragraph style={{marginBottom: 0}}>{row.member.email}</Paragraph>
                     </div>
                 );
@@ -116,6 +121,7 @@ const ProjectTeam: React.FC<ProjectTeamProps> = ({project, onReload}) => {
                             setAddUser({
                                 email: row.member.email,
                                 fullName: row.member.fullName,
+                                nameInProduct: row.member.nameInProduct,
                                 role: row.role
                             });
                         }} >
@@ -200,7 +206,8 @@ const ProjectTeam: React.FC<ProjectTeamProps> = ({project, onReload}) => {
                         key: item.email,
                         member: {
                             fullName: item.fullName,
-                            email: item.email
+                            email: item.email,
+                            nameInProduct:  userList.find(u => u.email === item.email)?.nameInProduct
                         },
                         role: userList.find(u => u.email === item.email)?.role
                     }));
@@ -257,6 +264,8 @@ const ProjectTeam: React.FC<ProjectTeamProps> = ({project, onReload}) => {
     const onOkAddMember = () => {
         if (!addUser.role) {
             message.error('Please select role');
+        } else if (isDuplicateNickName) {
+            message.error('Nickname already exists');
         } else {
             onOkModal();
         }
@@ -273,7 +282,8 @@ const ProjectTeam: React.FC<ProjectTeamProps> = ({project, onReload}) => {
                     userList: [
                         {
                             email: addUser.email,
-                            role: addUser.role
+                            role: addUser.role,
+                            nameInProduct: addUser.nameInProduct
                         }
                     ]
                 }
@@ -306,7 +316,12 @@ const ProjectTeam: React.FC<ProjectTeamProps> = ({project, onReload}) => {
                 <Menu.Item key={user.email} onClick={(e) => {
                     let user = searchUsers.find((u: any) => u.email === e.key);
 
-                    setAddUser(user);
+                    let nameInProduct = getNameFromEmail(user.email);
+
+                    setAddUser({
+                        ...user,
+                        nameInProduct
+                    });
                     setIsEdit(false);
                     setTimeout(() => {
                         setOpenModalAdd(true);
@@ -322,6 +337,22 @@ const ProjectTeam: React.FC<ProjectTeamProps> = ({project, onReload}) => {
             )) : <div className='t-c p-10'>Not found user</div>}
         </Menu>
     );
+
+    const onChangeNickName = (e: any) => {
+        const {value} = e.target;
+        const isDuplicate = members.some((member: any) => getNameFromEmail(member.key) === value );
+
+        if (isDuplicate) {
+            setDuplicateNickName(true);
+        } else {
+            setDuplicateNickName(false);
+        }
+        
+        setAddUser({
+            ...addUser,
+            nameInProduct: value
+        });
+    };
 
     return (
         <div>
@@ -355,7 +386,13 @@ const ProjectTeam: React.FC<ProjectTeamProps> = ({project, onReload}) => {
                                             <Option disabled={currentRole === ADMIN && addUser.email !== user.email && role.key === ADMIN} key={role.key} value={role.key}>{role.label}</Option>
                                         );
                                     })}
-                                </Select></Col>
+                                </Select>
+                            </Col>
+                            <Col span={24}>
+                                <b style={{fontSize: 16}}>Nickname</b>
+                                <Input size="large" value={addUser.nameInProduct} onChange={onChangeNickName} />
+                                {isDuplicateNickName ? <Paragraph type='danger'>Nickname already exists</Paragraph> : null}
+                            </Col>
                             {/* <Col span={24}>
                                 <b style={{fontSize: 16}}>Trello email</b>
                                 <Input size='large' placeholder='Input Trello email' />

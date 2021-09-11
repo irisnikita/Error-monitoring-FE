@@ -54,6 +54,9 @@ export const initialProject = {
     enableSlack: false,
     enableTrello: false,
     platform: '',
+    autoSuggestPerson: false,
+    autoSuggestSolution: false,
+    enableMailNotification: false,
     userList: []
 }; 
 

@@ -1,33 +1,40 @@
 // Libraries
 import React, {useState} from 'react';
+
+// Components
 import {Select} from 'antd';
-
-// Helpers
-import emitter from 'helpers/mitt';
-import {handelError, isEditIssue} from 'helpers';
-
-// Constants
-import {STATUES} from 'constants/issues';
-import {RELOAD_ISSUE} from 'constants/event';
+import {selectValue} from 'utils';
 
 // Services
 import * as issueServices from 'services/issue';
+
+// Helpers
+import {handelError, isEditIssue} from 'helpers';
+import emitter from 'helpers/mitt';
+
+// Constants
+import {RELOAD_ISSUE, RELOAD_ISSUES} from 'constants/event';
+
+// Antd
+const {Option} = Select;
+
 import {SizeType} from 'antd/lib/config-provider/SizeContext';
 
-interface StatusProps {
-    issue: any,
-    projectId: any,
+interface ReviewerProps {
     role: any,
-    size: SizeType
+    issue: any,
+    size?: SizeType,
+    members: any[],
+    projectId: any,
 }
 
-const Status: React.FC<StatusProps> = ({
-    projectId,
+const Reviewer: React.FC<ReviewerProps> = ({
+    role,
+    members,
     issue,
     size,
-    role
+    projectId
 }) => {
-
     const [isLoading, setLoading] = useState(false);
 
     const onChange = async (value: any) => {
@@ -36,11 +43,11 @@ const Status: React.FC<StatusProps> = ({
             const params = {
                 id: issue.id,
                 assignee: issue.assignee,
-                reviewer: issue.reviewer,
+                reviewer: value,
                 dueDate: issue.dueDate,
                 startDate: issue.startDate,
                 priority: issue.priority,
-                status: value
+                status: issue.status
             };
 
             await issueServices.update({
@@ -49,6 +56,7 @@ const Status: React.FC<StatusProps> = ({
                 issue: {...params}
             });
 
+            emitter.emit(RELOAD_ISSUES);
             emitter.emit(RELOAD_ISSUE);
         } catch (error) {
             handelError();
@@ -58,14 +66,19 @@ const Status: React.FC<StatusProps> = ({
     };
 
     return (
-        <Select size={size} disabled={!isEditIssue(role)} loading={isLoading} onChange={onChange} value={issue.status}>
-            {STATUES.map(status => (
-                <Select.Option key={status.key} value={status.key}>
-                    {status.label}
-                </Select.Option>
-            ))}
+        <Select 
+            size={size}
+            disabled={!isEditIssue(role)}
+            onChange={onChange}
+            value={selectValue(issue.reviewer)}
+            loading={isLoading}
+            placeholder='Reviewer'
+        >
+            {Array.isArray(members) ? members.map(member => (
+                <Option key={member.email} value={member.email}>{member.fullName}</Option>
+            )) : null}
         </Select>
     );
 };
 
-export default Status;
+export default Reviewer;
