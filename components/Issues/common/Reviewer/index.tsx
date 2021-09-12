@@ -42,17 +42,12 @@ const Reviewer: React.FC<ReviewerProps> = ({
         try {
             const params = {
                 id: issue.id,
-                assignee: issue.assignee,
-                reviewer: value,
-                dueDate: issue.dueDate,
-                startDate: issue.startDate,
-                priority: issue.priority,
-                status: issue.status
+                reviewer: value
             };
 
             await issueServices.update({
                 id: projectId,
-                type: 'update-issue',
+                type: 'update-reviewer',
                 issue: {...params}
             });
 

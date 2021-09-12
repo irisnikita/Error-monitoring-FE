@@ -43,7 +43,6 @@ const Assignee: React.FC<AssigneeProps> = ({
             const params = {
                 id: issue.id,
                 assignee: value,
-                reviewer: issue.reviewer,
                 dueDate: issue.dueDate,
                 startDate: issue.startDate,
                 priority: issue.priority,

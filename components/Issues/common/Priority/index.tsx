@@ -35,7 +35,6 @@ const Priority: React.FC<PriorityProps> = ({
             const params = {
                 id: issue.id,
                 assignee: issue.assignee,
-                reviewer: issue.reviewer,
                 dueDate: issue.dueDate,
                 startDate: issue.startDate,
                 priority: key,

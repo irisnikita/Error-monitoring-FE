@@ -69,7 +69,6 @@ const DueDate: React.FC<DueDateProps> = ({size, issue, role, projectId}) => {
             const params = {
                 id: issue.id,
                 assignee: issue.assignee,
-                reviewer: issue.reviewer,
                 dueDate: value[1] ? moment(value[1]).format() : null,
                 startDate: value[0] ? moment(value[0]).format() : null,
                 priority: issue.priority,
