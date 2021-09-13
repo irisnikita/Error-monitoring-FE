@@ -109,7 +109,7 @@ const DueDate: React.FC<DueDateProps> = ({size, issue, role, projectId}) => {
                 }
                 size={size}
                 disabledDate={disabledDate}
-                disabled={!isEditIssue(role)}
+                disabled={!isEditIssue(role) || issue.status === STATUS_RESOLVED}
                 value={value}
                 placeholder={['Start date','Due date']}
                 showTime={{format: 'HH:mm'}}

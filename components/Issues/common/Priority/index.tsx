@@ -7,7 +7,7 @@ import * as issueServices from 'services/issue';
 
 // Constants
 import {RELOAD_ISSUES} from 'constants/event';
-import {PRIORITIES} from 'constants/issues';
+import {PRIORITIES, STATUS_RESOLVED} from 'constants/issues';
 
 // Helpers
 import {getIssuePriorityColor, getIssuePriorityLabel, isEditIssue} from 'helpers/index';
@@ -66,7 +66,7 @@ const Priority: React.FC<PriorityProps> = ({
     );
 
     return (
-        <Dropdown disabled={!isEditIssue(role)} overlay={menu} trigger={['click']}>
+        <Dropdown disabled={!isEditIssue(role) || issue.status === STATUS_RESOLVED} overlay={menu} trigger={['click']}>
             <Spin spinning={isLoading}>
 
                 {!priority ? <Button size='small'>

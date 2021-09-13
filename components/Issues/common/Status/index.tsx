@@ -7,7 +7,7 @@ import emitter from 'helpers/mitt';
 import {handelError, isEditIssue} from 'helpers';
 
 // Constants
-import {STATUES} from 'constants/issues';
+import {STATUES, STATUS_RESOLVED} from 'constants/issues';
 import {RELOAD_ISSUE} from 'constants/event';
 
 // Services
@@ -57,7 +57,7 @@ const Status: React.FC<StatusProps> = ({
     };
 
     return (
-        <Select size={size} disabled={!isEditIssue(role)} loading={isLoading} onChange={onChange} value={issue.status}>
+        <Select size={size} disabled={!isEditIssue(role) || issue.status === STATUS_RESOLVED} loading={isLoading} onChange={onChange} value={issue.status}>
             {STATUES.map(status => (
                 <Select.Option key={status.key} value={status.key}>
                     {status.label}
