@@ -1,9 +1,10 @@
 // Libraries
 import React, {useState} from 'react';
+import {Avatar} from 'antd';
 
 // Components
 import {Select} from 'antd';
-import {selectValue} from 'utils';
+import {formatNameToAvatar, selectValue} from 'utils';
 
 // Services
 import * as issueServices from 'services/issue';
@@ -22,11 +23,11 @@ import {SizeType} from 'antd/lib/config-provider/SizeContext';
 import {STATUS_RESOLVED} from 'constants/issues';
 
 interface AssigneeProps {
-    role: any,
-    issue: any,
-    size?: SizeType,
-    members: any[],
-    projectId: any,
+    role: any;
+    issue: any;
+    size?: SizeType;
+    members: any[];
+    projectId: any;
 }
 
 const Assignee: React.FC<AssigneeProps> = ({
@@ -66,17 +67,25 @@ const Assignee: React.FC<AssigneeProps> = ({
     };
 
     return (
-        <Select 
+        <Select
             size={size}
             disabled={!isEditIssue(role) || issue.status === STATUS_RESOLVED}
             onChange={onChange}
             value={selectValue(issue.assignee)}
             loading={isLoading}
-            placeholder='Assignee'
+            style={{width: 170}}
+            placeholder="Assignee"
         >
-            {Array.isArray(members) ? members.map(member => (
-                <Option key={member.email} value={member.email}>{member.fullName}</Option>
-            )) : null}
+            {Array.isArray(members)
+                ? members.map((member) => (
+                    <Option key={member.email} value={member.email}>
+                        <div className='flex a-c gap-5'>
+                            <Avatar style={{flexShrink: 0}} src={member.avatar} size='small'>{formatNameToAvatar(member.fullName)}</Avatar>
+                            <span>{member.fullName}</span>
+                        </div>
+                    </Option>
+                ))
+                : null}
         </Select>
     );
 };
