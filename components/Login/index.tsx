@@ -213,7 +213,7 @@ const Login: React.FC<LoginProps> = () => {
                     </Col>
                 </Row>
             </Form>
-            <GoogleLogin
+            {/* <GoogleLogin
                 clientId="801385582850-13insi815a56hte71ge0s3i3107nqt43.apps.googleusercontent.com"
                 buttonText="Login"
                 onSuccess={responseGoogle}
@@ -224,7 +224,7 @@ const Login: React.FC<LoginProps> = () => {
                     </Button>
                 )}
                 cookiePolicy={'single_host_origin'}
-            />
+            /> */}
         </div>
     );
 };

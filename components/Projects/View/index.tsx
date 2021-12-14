@@ -76,7 +76,7 @@ const Projects: React.FC<ProjectsProps> = () => {
 
     const showRenderProjects = (projects: IProject[]) => {
         return projects && projects.length ? projects.map((project) => {
-            const {name, platform, createTime, id, active} = project;
+            const {name, platform, createTime, id, active, issues = []} = project;
             const logoPlatform = platforms.find(p => p.key === platform)?.logo;
             const status = projectStatus.find(p => p.value === active);
 
@@ -103,9 +103,7 @@ const Projects: React.FC<ProjectsProps> = () => {
                                 </Col>
                             </Row>
                             <div className='__sub-info flex a-c gap-5'>
-                                <span>0 errors</span>
-                                <span>|</span>
-                                <span>0 transactions</span>
+                                <span>{issues.length} errors</span>
                             </div>
                         </div>
                     </div>} />

@@ -10,6 +10,12 @@ import IntegrationTrello from './components/IntegrationTrello';
 import IntegrationSlack from './components/IntegrationSlack';
 import IssuesSetting from './components/IssuesSetting';
 import Notification from './components/Notification';
+import {useDispatch, useSelector} from 'react-redux';
+
+// Layout slice
+import {
+    selectUser
+} from 'slice/layoutSlice';
 
 // Services
 import * as projectServices from 'services/project';
@@ -33,13 +39,15 @@ interface SettingProps {
 type projectItem = {
     key: string,
     label: string,
-    child?: Array<{key: string, label: string}>
+    isGuard?: boolean,
+    child?: Array<{key: string, label: string, isGuard?: boolean,}>
 }
 
 const Setting: React.FC<SettingProps> = ({pId}) => {
     // state
     const [project, setProject] = useState<IProject>(initialProject);
     const [isLoading, setLoading] = useState(false);
+    const user = useSelector(selectUser);
  
     const projectMenu: Array<projectItem> = [{
         key: 'project', label: 'Project', child: [
@@ -47,19 +55,19 @@ const Setting: React.FC<SettingProps> = ({pId}) => {
                 key: 'general-setting', label: 'General Settings'
             },
             {
-                key: 'issues-setting', label: 'Issues Settings'
+                key: 'issues-setting', label: 'Issues Settings', isGuard: true
             },
             {
                 key: 'project-team', label: 'Project Team'
             },
             {
-                key: 'integration-trello', label: 'Integration Trello'
+                key: 'integration-trello', label: 'Integration Trello', isGuard: true
             },
             {
-                key: 'integration-slack', label: 'Integration Slack'
+                key: 'integration-slack', label: 'Integration Slack', isGuard: true
             },
             {
-                key: 'notification', label: 'Notification'
+                key: 'notification', label: 'Notification', isGuard: true
             }
         ]
     }];
@@ -100,6 +108,10 @@ const Setting: React.FC<SettingProps> = ({pId}) => {
                     {showRenderProjectMenu(item.child)}
                 </Menu.ItemGroup>;
             } else {
+                if (item.isGuard && user.email !== project.createUser) {
+                    return null;
+                }
+
                 return (
                     <Menu.Item key={item.key}>{item.label}</Menu.Item>
                 );

@@ -77,6 +77,7 @@ const IssueItem: React.FC<IssueItemProps> = ({
                             <Space align='center' size={5}>
                                 <i className='icon-hvh-clock' />
                                 {moment(createTime).fromNow()}
+                                {moment(createTime).format('DD/MM/YYYY')}
                             </Space>
                             <Priority role={role} projectId={projectId} issue={issue} />
                             <DueDate size='small' issue={issue} projectId={projectId} role={role} />

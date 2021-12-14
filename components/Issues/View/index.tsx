@@ -269,7 +269,7 @@ const IssueView: React.FC<IssueViewProps> = () => {
                 issue: {...params}
             });
 
-            getIssues();
+            // getIssues();
         } catch (error) {
             handelError();
         }

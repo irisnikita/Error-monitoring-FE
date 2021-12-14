@@ -3,13 +3,14 @@
 /* -------------------------------------------------------------------------- */
 // Libraries
 import React from 'react';
+import {useRouter} from 'next/router';
 import {Avatar, Typography, Dropdown, Menu} from 'antd';
-import  {useSelector} from 'react-redux';
 import classnames from 'classnames';
 import Link from 'next/link';
+import {useDispatch, useSelector} from 'react-redux';
 
 // Redux toolkit
-import {selectUser} from 'slice/layoutSlice';
+import {selectUser, setUser} from 'slice/layoutSlice';
 
 // Utils
 import {formatNameToAvatar} from 'utils';
@@ -22,9 +23,20 @@ interface UserInfoProps {
 }
 
 const UserInfo: React.FC<UserInfoProps> = () => {
+    const router = useRouter();
     const user = useSelector(selectUser);
+    const dispatch = useDispatch();
 
     const {avatar, organization, email, fullName} = user;
+
+    const onClickLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('filter-issue');
+        localStorage.removeItem('filter-suite');
+        
+        dispatch(setUser({}));
+        router.push('/');
+    };
 
     const menu = () => (
         <Menu>
@@ -40,8 +52,7 @@ const UserInfo: React.FC<UserInfoProps> = () => {
                 User settings
                 </Link>
             </Menu.Item>
-            <Menu.Item>API keys</Menu.Item>
-            <Menu.Item>Sign out</Menu.Item>
+            <Menu.Item onClick={onClickLogout}>Sign out</Menu.Item>
         </Menu>
     );
 
