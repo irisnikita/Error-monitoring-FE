@@ -1,19 +1,36 @@
 // Libraries
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useRouter} from 'next/router';
 
 // Components
-import Documents from 'components/Documents';
 import Layout from 'components/Layout';
+import {getAllDocumentSlug} from 'helpers/mdx';
 
 interface DocumentsPageProps {
-  
+    slugs: any
 }
 
-const DocumentsPage: React.FC<DocumentsPageProps> = () => {
+export async function getStaticProps() {
+    const slugs =  getAllDocumentSlug();
+
+    return {
+        props: {
+            slugs
+        } // will be passed to the page component as props
+    };
+}
+
+const DocumentsPage: React.FC<DocumentsPageProps> = ({slugs}) => {
+    const router = useRouter();
+
+    useEffect(() => {
+        if (slugs && slugs.length) {
+            router.push(`/dashboard/documents/${slugs[0]}`);
+        }
+    }, [slugs]);
+
     return (
-        <Layout isDashboard>
-            <Documents />
-        </Layout>
+        <Layout isDashboard />
     );
 };
 

@@ -1,0 +1,53 @@
+---
+title: "Integration with Trello"
+date: "15-12-2021"
+author: "Nguyen Luong Truong Vi"
+description: "Controllers có nhiệm vụ xử lý các yêu cầu đến và trả lại phản hồi cho phía client."
+menu: { key: "integration-trello", label: "Integration Trello" }
+---
+
+## Require Information
+
+- **App Key** <br />
+  - API key Format: c7a6eed6dd294af2536520a37ab4c35e <br />
+  - Indication: Most developers will ask each user to license your app. If you're intending to build your own app or are conducting internal testing, you can manually create a token.
+    User Token
+- **User Token** <br />
+  This token, along with your API key, can be used to read and write for your entire Trello account. Tokens should be kept secret!
+- **Board** <br />
+  A Trello board is a series of lists, with a bunch of cards attached. Click cards to drag and drop them from one list to another. It’s a simple, visual way to see what needs to get done.
+- **List ID** <br />
+  A Trello list id is define with lists action you want to add issue card into.
+
+## How to get them
+
+- **App Key**
+
+  1. Visit this page: <a target="_blank" href='https://trello.com/app-key'>Developer API Keys</a>
+  2. Get this App key in Red Area:
+     ![Developer API Keys](/images/documents/trello-api-keys.png)
+
+- **User Token**
+
+  1.  Visite this page: <a target="_blank" href='https://trello.com/app-key'>Developer API Keys</a>
+  2.  Click "Token" in Red area:
+      ![Trello token](/images/documents/trello-token.png)
+  3.  Click "Allow":
+      ![Trello allow](/images/documents/trello-allow.png)
+  4.  Token in Red area:
+      ![Trello allow](/images/documents/trello-token-a.png)
+
+- **Board ID**
+
+  1. Go to your Trello Board
+  2. Board ID is the selection text in red area
+     ![Trello allow](/images/documents/trello-board-id.png)
+
+- **List id**
+  1. Go to General setting project: https://error-monitoring.vercel.app/dashboard/projects/{{project-id}}/setting
+  2. You must fill all field above like below image (App key, User token, Board ID):
+     ![Trello fill](/images/documents/trello-list-id-fill.png)
+  3. If you fill all and correct, field "List ID" will show list of List action. Click the list actions you want to push issue card:
+     ![Trello list actions](/images/documents/trello-list-action.png)
+  4. Click enable integration and click "Save" to apply configure:
+     ![Trello save](/images/documents/trello-save.png)

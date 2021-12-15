@@ -1,0 +1,58 @@
+---
+title: "Integration with Slack"
+date: "15-12-2021"
+author: "Nguyen Luong Truong Vi"
+description: "Controllers có nhiệm vụ xử lý các yêu cầu đến và trả lại phản hồi cho phía client."
+menu: { key: "integration-slack", label: "Integration Slack" }
+---
+
+## Require Information
+
+- **App Bot Token** <br />
+
+  - What is App? <br />
+    Apps connect other software you use (like Google Calendar, Salesforce, or one of your company's internal tools) to Slack. With all your tools in one place, you can streamline work and help people in your workspace collaborate more effectively.
+  - What is Bot User? <br />
+    Some Slack apps have bot users that can send messages and post in channels. You might receive a direct message (DM) from an app’s bot user (for example, with a link to fill out a survey created with the app) or see messages in channels posted by an app.
+  - What is App Bot Token? <br />
+    Bot tokens represent a bot associated with the app installed in a workspace. Unlike user tokens, they're not tied to a user's identity; they're just tied to your app.
+    Since acting independently allows your app to stay installed even when an installing user is deactivated, using bot tokens is usually for the best.
+    Check out the guide to creating Slack apps with bot tokens for more info.
+    Bot token strings begin with xoxb-
+    New bot users can request individual scopes, similar to user tokens.
+
+- **Chanel ID** <br />
+  Slack organizes conversations into dedicated spaces called channels. Channels bring order and clarity to work — you can create them for any project, topic, or team. With the right people and information in one place, teams can share ideas, make decisions, and move work forward.
+
+## How to get them
+
+- **App Bot Token**
+
+  1. Visit this Page and Login(If yet): <a target="_blank" href='https://api.slack.com/apps'>Slack API: Applications | Slack</a>
+  2. Click "From Scratch":
+     ![Developer API Keys](/images/documents/trello-api-keys.png)
+
+- **User Token**
+
+  1.  Visite this page: <a target="_blank" href='https://trello.com/app-key'>Developer API Keys</a>
+  2.  Click "Token" in Red area:
+      ![Trello token](/images/documents/trello-token.png)
+  3.  Click "Allow":
+      ![Trello allow](/images/documents/trello-allow.png)
+  4.  Token in Red area:
+      ![Trello allow](/images/documents/trello-token-a.png)
+
+- **Board ID**
+
+  1. Go to your Trello Board
+  2. Board ID is the selection text in red area
+     ![Trello allow](/images/documents/trello-board-id.png)
+
+- **List id**
+  1. Go to General setting project: https://error-monitoring.vercel.app/dashboard/projects/{{project-id}}/setting
+  2. You must fill all field above like below image (App key, User token, Board ID):
+     ![Trello fill](/images/documents/trello-list-id-fill.png)
+  3. If you fill all and correct, field "List ID" will show list of List action. Click the list actions you want to push issue card:
+     ![Trello list actions](/images/documents/trello-list-action.png)
+  4. Click enable integration and click "Save" to apply configure:
+     ![Trello save](/images/documents/trello-save.png)

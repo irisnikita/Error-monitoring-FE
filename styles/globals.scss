@@ -2,6 +2,7 @@
 @import "icons";
 @import "project-details";
 @import "issue";
+@import "prism-theme";
 
 html,
 body {
@@ -352,6 +353,27 @@ button {
       position: absolute;
       height: 100%;
       width: 100%;
+    }
+  }
+}
+
+.mdx-wrapper {
+  img {
+    border-radius: 5px;
+    margin: 5px 0px;
+    width: 100%;
+    object-position: center;
+    object-fit: contain;
+  }
+
+  blockquote {
+    margin: 20px 0px;
+    padding: 14px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+
+    p {
+      margin: 0px;
     }
   }
 }

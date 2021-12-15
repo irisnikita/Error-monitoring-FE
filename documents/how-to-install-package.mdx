@@ -1,0 +1,50 @@
+---
+title: "Instructions for installing packages into the application"
+date: "15-12-2021"
+author: "Nguyen Luong Truong Vi"
+description: "Controllers có nhiệm vụ xử lý các yêu cầu đến và trả lại phản hồi cho phía client."
+menu: { key: "install-package", label: "Install package" }
+---
+
+On this page, we get you up and running with Error monitoring's package, so that it will automatically report errors and exceptions in your application.
+
+Don't already have an account and Error monitoring project established? Head over to error-monitoring.vercel.app, then return to this page.
+
+## Install
+
+```bash
+# Using npm
+npm i @error-monitoring/package
+# Using yarn
+yarn add @error-monitoring/package
+```
+
+## Configure
+
+Configuration should happen as early as possible in your application's lifecycle.
+
+```jsx
+import React from "react";
+import ReactDOM from "react-dom";
+import Error from "@error-monitoring/package";
+import App from "./App";
+
+Error.init({{
+  projectId: "your-project-id",
+  env: "development", // There are three config env: development, staging, production
+});
+
+ReactDOM.render(<App />, document.getElementById("root"));
+```
+
+> **How to get project id?** <br />
+>
+> 1. Go to project: https://error-monitoring.vercel.app/dashboard/projects <br />
+> 2. Chose your project you want to get project id
+>    ![step 1](https://i0.wp.com/s1.uphinh.org/2021/12/15/imagef2b7b91c9e5a6191.png)
+> 3. Click icon setting
+>    ![step 2](/images/documents/get-project-id-step-3.png)
+> 4. Finaly: Click coppy to get project id
+>    ![step 3](/images/documents/get-project-id-step-4.png)
+
+Once this is done, all unhandled exceptions are automatically captured by Error monitoring.
