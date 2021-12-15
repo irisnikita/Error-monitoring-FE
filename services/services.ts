@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const instance = axios.create();
+
 var CancelToken = axios.CancelToken;
 
-axios.interceptors.request.use( (config: any) => {
+instance.interceptors.request.use( (config: any) => {
     if ((process as any).browser) {
         let token = localStorage.getItem('token');
 
@@ -32,7 +34,7 @@ export const services =  {
             delete params.API;
             delete params.cancelToken;
 
-            return axios.get(API, {
+            return instance.get(API, {
                 params: params,
                 cancelToken: cancelToken
             });
@@ -49,7 +51,7 @@ export const services =  {
                 delete params.API;
                 delete params.cancelToken;
     
-                return axios.get(API, {
+                return instance.get(API, {
                     params: params,
                     cancelToken
                 });
@@ -62,7 +64,7 @@ export const services =  {
 
             delete params.API;
 
-            return axios.post(API, params);
+            return instance.post(API, params);
 
         } else {
             return false;
@@ -74,7 +76,7 @@ export const services =  {
 
             delete params.API;
 
-            return axios.post(API, params.formData, {params: {key: params.key}});
+            return instance.post(API, params.formData, {params: {key: params.key}});
 
         } else {
             return false;
@@ -86,7 +88,7 @@ export const services =  {
 
             delete params.API;
 
-            return axios.delete(API + '/' + params.id, {
+            return instance.delete(API + '/' + params.id, {
                 params: params
             });
         } else {
@@ -103,7 +105,7 @@ export const services =  {
 
             delete params.API;
 
-            return axios.put(API, params , {params: {token: params.token || '', ...params.query}});
+            return instance.put(API, params , {params: {token: params.token || '', ...params.query}});
         } else {
             return false;
         }

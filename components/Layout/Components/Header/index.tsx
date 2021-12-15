@@ -4,9 +4,15 @@
 // Libraries
 import React, {useEffect, useMemo, useState} from 'react';
 import {useRouter} from 'next/router';
-import {Layout, Menu, Button, Drawer, Tabs, Input} from 'antd';
+import {Layout, Menu, Button, Drawer, Tabs, Input, Dropdown, Typography, Tag} from 'antd';
 import classnames from 'classnames';
+import Link from 'next/link';
 import {useDispatch, useSelector} from 'react-redux';
+import algoliasearch from 'algoliasearch';
+import Highlighter from 'react-highlight-words';
+
+// Hooks
+import useDebounce from 'hooks/useDebounce'; 
 
 // Layout slice
 import {
@@ -26,7 +32,13 @@ import Register from 'components/Register';
 
 // Antd
 const {Header: AntdHeader} = Layout;
+const {Title} = Typography;
 const {TabPane} = Tabs;
+
+// Services
+import * as projectService from 'services/project';
+import {handelError} from 'helpers';
+import {Divider} from 'rc-menu';
 
 // Type
 interface HeaderProps {
@@ -37,6 +49,9 @@ type TMenuList = {
     key: any,
     label: String
 }
+
+const client = algoliasearch('WBPP8V3IK6', '1d0d339d437210d2c910e7c4e19104c2');
+const index = client.initIndex('dev_issues');
 
 /* -------------------------------------------------------------------------- */
 /*                                  Component                                 */
@@ -53,8 +68,16 @@ const Header: React.FC<HeaderProps> = ({isDashboard}) => {
         // {key: 'sign-in', label: 'Sign in'},
         // {key: 'sign-up', label: 'Sign up'}
     ]);
-
+    const [searchValue, setSearchValue] = useState('');
+    const [searchState, setSearchState] = useState({
+        hits: []
+    });
+    const [projects, setProjects] = useState<any[]>([]);
+    const [isOpenSearchDropdown, setOpenSearchDropdown] = useState(false);
     const [isOpenDrawer, setOpenDrawer] = useState(false);
+
+    // Use debounce
+    const debounceSearchValue = useDebounce(searchValue, 400);
 
     // Use memo
     const isDisplayAbsolute = useMemo(() => {
@@ -62,10 +85,59 @@ const Header: React.FC<HeaderProps> = ({isDashboard}) => {
     }, []);
 
     useEffect(() => {
+        getIssues();
+    }, [debounceSearchValue]);
+
+    useEffect(() => {
+        getProjects();
+    }, []);
+
+    const getProjects = async () => {
+        try {
+            const response = await projectService.get();
+            
+            if (response && response.data) {
+                const {data} = response.data;
+
+                setProjects(data);
+            }
+        } catch (error) {
+            handelError();
+        }
+    };
+
+    useEffect(() => {
         if (isTryFree && router.route === '/') {
             setOpenDrawer(true);
         }
     }, [isTryFree]);
+
+    const getIssues = async () => {
+        let filterOr: string[] = [];
+
+        if (projects && projects.length) {
+            filterOr = projects.map(project => `projectId:${project.id}`);
+        }
+
+        if (debounceSearchValue !== '') {
+            index.search(debounceSearchValue, {
+                hitsPerPage: 5,
+                page: 0,
+                facetFilters: [filterOr]
+            }).then((data) => {
+                setSearchState({
+                    ...searchState,
+                    hits: data.hits as any
+                });
+                setOpenSearchDropdown(true);
+            });
+        } else {
+            setSearchState({
+                ...searchState,
+                hits: []
+            });
+        }
+    };
 
     const callbackRegister  = (email: string) => {
         setTabKeySelected('login');
@@ -103,6 +175,66 @@ const Header: React.FC<HeaderProps> = ({isDashboard}) => {
         router.push('/');
     };
 
+    const onChangeSearch = (e: any) => {
+        setSearchValue(e.target.value);
+    };
+    
+    const menuSearch = (
+        <Menu>
+            <div>
+                <Title level={5} style={{padding: '5px 10px', borderBottom: '1px solid rgba(0, 0, 0, 0.1)'}}>Issues</Title>
+            </div>
+            {searchState.hits && searchState.hits.length ? searchState.hits.map((hit: any, index) => {
+                return (
+                    <Menu.Item key={index}>
+                        <Link href={`/dashboard/issues/${hit.projectId}/${hit.id}`}>
+                            <div className={styles['hit-row']}>
+                                <div className={styles['hit__project-name']}>
+                                    <Highlighter
+                                        highlightClassName={styles['text-highlight']}
+                                        searchWords={debounceSearchValue.split(' ')}
+                                        autoEscape={true}
+                                        textToHighlight={hit.projectName}
+                                    />
+                                </div>
+                                <div className={styles['hit__issue-info']}>
+                                    <strong>
+                                        <Highlighter
+                                            highlightClassName={styles['text-highlight']}
+                                            searchWords={debounceSearchValue.split(' ')}
+                                            autoEscape={true}
+                                            textToHighlight={hit.name}
+                                        />
+                                    </strong>
+                                    <div>
+                                        <Highlighter
+                                            highlightClassName={styles['text-highlight']}
+                                            searchWords={debounceSearchValue.split(' ')}
+                                            autoEscape={true}
+                                            textToHighlight={hit.description}
+                                        />
+                                    </div>
+                                    <Tag color="default">
+                                        <Highlighter
+                                            highlightClassName={styles['text-highlight']}
+                                            searchWords={debounceSearchValue.split(' ')}
+                                            autoEscape={true}
+                                            textToHighlight={hit.environment}
+                                        />
+                                    </Tag>
+                                </div>
+                            </div>
+                        </Link>
+                    </Menu.Item>
+                );
+            }) : <div style={{padding: 10}}>No issues founded</div>}
+        </Menu>
+    );
+
+    const onVisibleChange = () => {
+        setOpenSearchDropdown(!isOpenSearchDropdown);
+    };
+
     return ( 
         <>
             <AntdHeader className={classnames({
@@ -113,7 +245,9 @@ const Header: React.FC<HeaderProps> = ({isDashboard}) => {
                     'no-space': isDashboard
                 })}>
                     {isDashboard ? (
-                        <Input.Search placeholder='Input to search' size='large' style={{width: 300}} />
+                        <Dropdown overlay={menuSearch} trigger={['click']} visible={isOpenSearchDropdown} onVisibleChange={onVisibleChange}>
+                            <Input.Search placeholder='Input to search' size='large' style={{width: 300}} onChange={onChangeSearch} />
+                        </Dropdown>
                     ) : (
                         <>
                             <div className={styles['logo']}>

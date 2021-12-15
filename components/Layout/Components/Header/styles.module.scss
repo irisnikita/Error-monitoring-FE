@@ -17,3 +17,32 @@
 	// .right-menu {
 	// }
 }
+
+
+.hit-row {
+	display: flex;
+	align-items: center;
+	
+	.hit__project-name{
+		width: 150px;
+		overflow: hidden;
+		color: gray;
+		text-overflow: ellipsis;
+		font-size: 15px;
+		text-align: right;
+		padding-right: 10px;
+	}
+
+	.hit__issue-info {
+		max-width: 400px;
+		white-space: normal;
+		padding-left: 10px;
+		border-left: 1px solid rgba(0, 0, 0, 0.1)
+	}
+}
+
+.text-highlight {
+	color: #006d75;
+	background-color: #e7fdfa;
+	padding: 0px;
+}
