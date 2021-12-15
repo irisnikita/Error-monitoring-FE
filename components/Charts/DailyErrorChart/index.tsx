@@ -19,8 +19,8 @@ interface DailyErrorChartProps {
 }
 
 type error = {
-        time: string,
-        count: number
+    time: string,
+    count: number
 }
 
 /* -------------------------------------------------------------------------- */
