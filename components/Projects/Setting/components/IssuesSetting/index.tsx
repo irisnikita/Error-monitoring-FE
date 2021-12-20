@@ -76,13 +76,13 @@ const IssuesSetting: React.FC<IssuesSettingProps> = ({project, onReload}) => {
                             }}
                         form={form}
                     >
-                        <Form.Item 
+                        {/* <Form.Item 
                             name='autoSuggestSolution'
                             label={<div style={{marginLeft: 10}} className='form__label'>Auto suggest solution</div>}
                             valuePropName="checked"
                         >
                             <Switch />
-                        </Form.Item>
+                        </Form.Item> */}
                         <Form.Item 
                             name='autoSuggestPerson'
                             label={<div style={{marginLeft: 10}} className='form__label'>Auto suggest assignee</div>}
