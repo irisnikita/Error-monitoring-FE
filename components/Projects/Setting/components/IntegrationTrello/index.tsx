@@ -126,7 +126,7 @@ const Integration: React.FC<IntegrationProps> = ({project, onReload}) => {
 
     return (
         <div>
-            <Title level={4}>Integration trello</Title>
+            <Title level={4}>Integration Trello</Title>
             <Collapse defaultActiveKey={['config']} collapsible='header'>
                 <Panel  showArrow={false} header="Config" key="config">
                     <Form

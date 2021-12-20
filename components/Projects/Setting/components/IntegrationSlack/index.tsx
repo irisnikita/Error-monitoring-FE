@@ -83,7 +83,7 @@ const IntegrationSlack: React.FC<IntegrationSlackProps> = ({project, onReload}) 
 
     return (
         <div>
-            <Title level={4}>Integration trello</Title>
+            <Title level={4}>Integration Slack</Title>
             <Collapse defaultActiveKey={['config']} collapsible='header'>
                 <Panel  showArrow={false} header="Config" key="config">
                     <Form
