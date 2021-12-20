@@ -62,7 +62,7 @@ const IssuesSetting: React.FC<IssuesSettingProps> = ({project, onReload}) => {
 
     return (
         <Spin spinning={isLoading}>
-            <Title level={4}>Issues setting</Title>
+            <Title level={4}>Issues Notification</Title>
             <Collapse defaultActiveKey={['config']} collapsible='header'>
                 <Panel  showArrow={false} header="Config" key="config">
                     <Form

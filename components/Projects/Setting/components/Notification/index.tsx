@@ -51,7 +51,7 @@ const Notification: React.FC<NotificationProps> = ({project, onReload}) => {
 
     return (
         <Spin spinning={isLoading}>
-            <Title level={4}>Issues setting</Title>
+            <Title level={4}>Issues Setting</Title>
             <Collapse defaultActiveKey={['config']} collapsible='header'>
                 <Panel  showArrow={false} header="Config" key="config">
                     <Form

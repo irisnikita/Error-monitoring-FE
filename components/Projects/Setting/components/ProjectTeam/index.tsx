@@ -356,7 +356,7 @@ const ProjectTeam: React.FC<ProjectTeamProps> = ({project, onReload}) => {
 
     return (
         <div>
-            <Title level={4}>Project team</Title>
+            <Title level={4}>Project Team</Title>
             <Dropdown disabled={[ADMIN, OWNER].indexOf(currentRole) === -1} overlay={menu} trigger={['click']}>
                 <Spin spinning={isLoadingSelect}>
                     <Input disabled={[ADMIN, OWNER].indexOf(currentRole) === -1}  size='large' placeholder='Search user to invite' onChange={(e) => {setValueSearch(e.target.value)}} />
