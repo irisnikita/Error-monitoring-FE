@@ -29,10 +29,12 @@ import ReactDOM from "react-dom";
 import Error from "@error-monitoring/package";
 import App from "./App";
 
-Error.init({{
-  projectId: "your-project-id",
-  env: "development", // There are three config env: development, staging, production
+const error = new Error({
+  projectId: "d284062f-33f0-40cb-539b-178c01fe318c",
+  env: "development",
 });
+
+error.initial();
 
 ReactDOM.render(<App />, document.getElementById("root"));
 ```
