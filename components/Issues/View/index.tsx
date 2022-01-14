@@ -81,17 +81,6 @@ const IssueView: React.FC<IssueViewProps> = () => {
         }  
     }, []);
 
-    useEffect(() => {
- 
-        const interval = setInterval(() => {
-            getIssues();
-        }, 5000);
-
-        return () => {
-            clearInterval(interval);
-        };
-    }, []);
-
     // Use effect get issues
     useEffect(() => {
         if (!isEqual(filter, previousFilter)) {
@@ -188,7 +177,7 @@ const IssueView: React.FC<IssueViewProps> = () => {
 
     // Function get issues
     const getIssues = async () => {
-        // setLoadingIssues(true);
+        setLoadingIssues(true);
         try {
             const params = {
                 projectId: filter.projectId,
@@ -219,7 +208,7 @@ const IssueView: React.FC<IssueViewProps> = () => {
         } catch (error) {
             handelError();
         } finally {
-            // setLoadingIssues(false);
+            setLoadingIssues(false);
         }
     };
 
