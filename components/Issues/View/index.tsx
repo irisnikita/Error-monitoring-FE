@@ -81,6 +81,17 @@ const IssueView: React.FC<IssueViewProps> = () => {
         }  
     }, []);
 
+    useEffect(() => {
+ 
+        const interval = setInterval(() => {
+            getIssues();
+        }, 5000);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+
     // Use effect get issues
     useEffect(() => {
         if (!isEqual(filter, previousFilter)) {
