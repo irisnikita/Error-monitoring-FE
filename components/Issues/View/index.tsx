@@ -188,7 +188,7 @@ const IssueView: React.FC<IssueViewProps> = () => {
 
     // Function get issues
     const getIssues = async () => {
-        setLoadingIssues(true);
+        // setLoadingIssues(true);
         try {
             const params = {
                 projectId: filter.projectId,
@@ -219,7 +219,7 @@ const IssueView: React.FC<IssueViewProps> = () => {
         } catch (error) {
             handelError();
         } finally {
-            setLoadingIssues(false);
+            // setLoadingIssues(false);
         }
     };
 
