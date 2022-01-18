@@ -45,6 +45,7 @@ const IssueItem: React.FC<IssueItemProps> = ({
         <Draggable draggableId={id} index={index} isDragDisabled={!isEditIssue(role)}>
             {(provided, snapshot) => (
                 <div
+                    id={`task-${id}`}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}

@@ -257,8 +257,8 @@ const IssueView: React.FC<IssueViewProps> = () => {
             const params = {
                 id: issue.id,
                 assignee: issue.assignee,
-                dueDate: issue.dueDate,
-                startDate: issue.startDate,
+                dueDate: status === STATUS_RESOLVED && issue.dueDate === '0001-01-01T00:00:00Z' ? moment().format() : issue.dueDate,
+                startDate: status === STATUS_PROCESSING && issue.startDate === '0001-01-01T00:00:00Z' ? moment().format() : issue.startDate,
                 priority: issue.priority,
                 status: status
             };
@@ -269,7 +269,16 @@ const IssueView: React.FC<IssueViewProps> = () => {
                 issue: {...params}
             });
 
-            // getIssues();
+            if ([STATUS_PROCESSING, STATUS_RESOLVED].includes(status)) {
+                await    getIssues();
+            }
+
+            const el = document.getElementById(`task-${issue.id}`);
+
+            if (el) {
+                el.scrollIntoView({block: 'center', behavior: 'smooth'});
+            }
+
         } catch (error) {
             handelError();
         }

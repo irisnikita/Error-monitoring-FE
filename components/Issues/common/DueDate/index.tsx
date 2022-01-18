@@ -43,7 +43,7 @@ const DueDate: React.FC<DueDateProps> = ({size, issue, role, projectId}) => {
             : moment(issue.startDate);
 
         setValue([startDate, dueDate]);
-    }, [issue.dueDate]);
+    }, [issue.dueDate, issue.startDate]);
 
     const disabledDate = (current: any) => {
         // Can not select days before today and today
@@ -92,9 +92,9 @@ const DueDate: React.FC<DueDateProps> = ({size, issue, role, projectId}) => {
 
     const onChange = (value: any) => {
         if (value === null) {
-            setValue(value);
+            setValue([]);
 
-            updateIssue(value);
+            updateIssue([]);
         }
     };
 
