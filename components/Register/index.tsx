@@ -122,7 +122,10 @@ const Register: React.FC<RegisterProps> = (props) => {
                     label="Password"
                     name={['user', 'password']}
                     rules={[
-                        {required: true}
+                        {
+                            required: true
+                        },
+                        {pattern: new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/),message: 'Minimum eight characters, at least one letter, one number and one special character'}
                     ]}
                 >
                     <Input.Password size="large" />
